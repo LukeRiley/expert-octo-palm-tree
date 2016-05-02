@@ -3,9 +3,12 @@ package io.trade.model;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class Users {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	@Column(name = "username", nullable = false, unique = true)
 	private String userName;
 	
@@ -17,7 +20,7 @@ public class User {
 	
 	
 	
-	public User(String userName, String password, int enabled) {
+	public Users(String userName, String password, int enabled) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -27,7 +30,15 @@ public class User {
 			this.enabled = 0;
 	}
 
-	public User() {
+	public Users() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUserName() {

@@ -3,25 +3,25 @@ package io.trade.model;
 import javax.persistence.*;
 
 @Entity
-public class UserRole {
+public class UserRoles {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "username", nullable = false)
-	private User user;
+	@OneToOne
+	private Users user;
 	
 	@Column(name = "role", nullable = false)
 	private String role;
 	
-	public UserRole(User user, String role) {
+	public UserRoles(Users user, String role) {
 		super();
 		this.user = user;
 		this.role = role;
 	}
 
-	public UserRole() {
+	public UserRoles() {
 	}
 
 	public Integer getId() {
@@ -32,11 +32,11 @@ public class UserRole {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 
