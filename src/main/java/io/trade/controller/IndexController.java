@@ -32,6 +32,10 @@ public class IndexController {
 		UserRoles ur = new UserRoles(u, "ROLE_ADMIN");
 		users.save(u);
 		userRoles.save(ur);
+		u = new Users("user", "user", 1);
+		ur = new UserRoles(u, "ROLE_USER");
+		users.save(u);
+		userRoles.save(ur);
 		return "home";
 	}
 

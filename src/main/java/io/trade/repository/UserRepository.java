@@ -11,6 +11,7 @@ import io.trade.model.Users;
 public interface UserRepository extends CrudRepository<Users, Integer> {
 	
 	List<Users> findAll();
+	List<Users> findByUserName(String name);
 	
 }
 
