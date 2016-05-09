@@ -4,7 +4,7 @@ import java.time.Instant;
 
 import javax.persistence.*;
 
-
+@Entity
 public class Auction {
 
 	@Id

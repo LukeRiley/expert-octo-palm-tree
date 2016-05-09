@@ -12,7 +12,7 @@ public class Item {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "desc", nullable = false)
+	@Column(name = "description", nullable = false)
 	private String description;
 	
 	@OneToOne
