@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.trade.model.Users;
 import io.trade.model.UserRoles;
-import io.trade.repository.UserRepository;
+import io.trade.repository.UsersRepository;
 import io.trade.repository.UserRoleRepository;
 
 
@@ -21,7 +21,7 @@ import io.trade.repository.UserRoleRepository;
 public class IndexController {
 	
 	@Autowired
-	UserRepository users;
+	UsersRepository users;
 	
 	@Autowired
 	UserRoleRepository userRoles;
