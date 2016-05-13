@@ -6,12 +6,53 @@
     </head>
     <body>
     	<h1>Account Sign Up</h1>
-        <form th:action="@{/register}" th:object="${users}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div> <!-- Verify Unique -->
-            <div><label> Real Name : <input type="text" name="realname"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><label> Confirm Password: <input type="password" name="confirm_pass"/> </label></div> <!-- Verify Matches Password-->
-            <div><input type="submit" value="Sign Up"/></div>
+        <form enctype="application/json">
+            <div>
+            	<label> User Name : <input type="text" id="userName" name="user[userName]" onkeyup="checkUserName()"/> </label>
+            	<label id="UniqueUserName"></label>		<!-- Make Font Color RED -->
+            </div> <!-- Verify Unique -->
+            <div><label> Real Name : <input type="text" name="realName"/> </label></div>
+            <div><label> Password: <input type="password" id="new_pass" name="user[password]"/> </label></div>
+            <div>
+            	<label> Confirm Password: <input type="password" id="confirm_pass" onkeyup="checkPassword()"/> </label>
+	            <label id="validPassword"></label>		<!-- Make Font Color RED -->			
+            </div> <!-- Verify Matches Password-->
+            <div><input type="submit" value="Sign Up" id="signUpBtn"/></div>
         </form>
+        
+        <script>
+        	function checkUserName(){
+        		var userName = document.getElementById("userName").value;
+        		//Check userName value is not in database
+        		
+        		/*
+        		for(String screenName : Users.username){
+        			if(userName == screenName){
+        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
+    					document.getElementById("signUpBtn").disabled = true;
+        			}
+        		}
+        		if(document.getElementById("validPassword").innerHTML == ""){
+        			document.getElementById("signUpBtn").disabled = false;
+        		}
+        		*/
+        	}
+        
+        	function checkPassword(){
+        		var pass = document.getElementById("new_pass").value;
+        		var confirm_pass = document.getElementById("confirm_pass").value;
+        		if(pass != confirm_pass){
+					document.getElementById("validPassword").innerHTML = "Passwords do not match";
+					document.getElementById("signUpBtn").disabled = true;
+        		}
+        		else{
+					document.getElementById("validPassword").innerHTML = "";
+					if(document.getElementById("UniqueUserName").innerHTML==""){
+						document.getElementById("signUpBtn").disabled = false;						
+					}
+        		}
+        	}
+        </script>
+        
     </body>
 </html>
