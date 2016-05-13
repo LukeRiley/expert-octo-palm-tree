@@ -7,8 +7,10 @@
     <body>
     	<h1>Account Sign Up</h1>
         <form th:action="@{/register}" th:object="${users}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> User Name : <input type="text" name="username"/> </label></div> <!-- Verify Unique -->
+            <div><label> Real Name : <input type="text" name="realname"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><label> Confirm Password: <input type="password" name="confirm_pass"/> </label></div> <!-- Verify Matches Password-->
             <div><input type="submit" value="Sign Up"/></div>
         </form>
     </body>
