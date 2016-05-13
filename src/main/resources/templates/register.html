@@ -6,18 +6,33 @@
     </head>
     <body>
     	<h1>Account Sign Up</h1>
+    	<!-- Form Should submit a UserDetails object using JSON -->
         <form enctype="application/json">
-            <div>
-            	<label> User Name : <input type="text" id="userName" name="user[userName]" onkeyup="checkUserName()"/> </label>
-            	<label id="UniqueUserName"></label>		<!-- Make Font Color RED -->
-            </div> <!-- Verify Unique -->
-            <div><label> Real Name : <input type="text" name="realName"/> </label></div>
-            <div><label> Password: <input type="password" id="new_pass" name="user[password]"/> </label></div>
-            <div>
-            	<label> Confirm Password: <input type="password" id="confirm_pass" onkeyup="checkPassword()"/> </label>
-	            <label id="validPassword"></label>		<!-- Make Font Color RED -->			
-            </div> <!-- Verify Matches Password-->
-            <div><input type="submit" value="Sign Up" id="signUpBtn"/></div>
+        	<table>
+        		<tr><!-- Verify Unique -->
+        			<td><label> User Name : </label></td>
+        			<td><input type="text" id="userName" name="user[userName]" onkeyup="checkUserName()"/></td>
+        			<td><label id="UniqueUserName"></label>		<!-- Make Font Color RED --></td>
+        		</tr>
+        		<tr>
+        			<td><label> Real Name : </label></td>
+        			<td><input type="text" name="realName"/></td>
+        		</tr>
+        		<tr>
+        			<td><label> Password:</label></td>
+        			<td><input type="password" id="new_pass" name="user[password]" onkeyup="checkPassword()"/></td>
+        		</tr>
+        		<tr><!-- Verify Matches Password-->
+        			<td><label> Confirm Password:</label></td>
+        			<td><input type="password" id="confirm_pass" onkeyup="checkPassword()"/></td>
+        			<td><label id="validPassword"></label>		<!-- Make Font Color RED --></td>
+        		</tr>
+        		<tr>
+        			<td>    			
+	        			<input type="submit" value="Sign Up" id="signUpBtn"/>
+        			</td>
+        		</tr>
+        	</table>
         </form>
         
         <script>
@@ -39,6 +54,8 @@
         	}
         
         	function checkPassword(){
+        		//Also Check for Complexity ?
+        		
         		var pass = document.getElementById("new_pass").value;
         		var confirm_pass = document.getElementById("confirm_pass").value;
         		if(pass != confirm_pass){
