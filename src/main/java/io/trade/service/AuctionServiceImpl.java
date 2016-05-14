@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.trade.model.Auction;
+import io.trade.model.Category;
 import io.trade.model.Item;
 import io.trade.model.Users;
 import io.trade.repository.AuctionRepository;
@@ -52,6 +53,16 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public List<Auction> findByItem(Item item) {
 		return auctions.findByItem(item);
+	}
+
+	@Override
+	public List<Auction> findByCategory(Category category) {
+		List<Item> items = database.findItemByCategory(category);
+		List<Auction> a = new ArrayList<Auction>();
+		for(Item i: items){
+			a.addAll(auctions.findByItem(i));
+		}
+		return a;
 	}
 
 }

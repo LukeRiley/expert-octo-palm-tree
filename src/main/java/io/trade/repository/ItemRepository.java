@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import io.trade.model.Item;
+import io.trade.model.*;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer> {
@@ -13,5 +13,6 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
 	List<Item> findAll();
 	List<Item> findByNameContains(String search);
 	List<Item> findByDescriptionContains(String search);
+	List<Item> findByCategory(Category category);
 }
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.trade.model.Auction;
+import io.trade.model.Category;
 import io.trade.model.Item;
 import io.trade.model.Users;
 import io.trade.repository.ItemRepository;
@@ -50,6 +51,11 @@ public class ItemServiceImpl implements ItemService {
 		Set<Item> i = new HashSet<Item>(items.findByDescriptionContains(search));
 		i.addAll(items.findByNameContains(search));
 		return new ArrayList<Item>(i);
+	}
+
+	@Override
+	public List<Item> findByCategory(Category category) {
+		return items.findByCategory(category);
 	}
 
 }

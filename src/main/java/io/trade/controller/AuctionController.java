@@ -38,6 +38,11 @@ public class AuctionController {
 		return new ResponseEntity<List<Auction>>(database.findAuctionByItem(item), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/login/auction/category", method = RequestMethod.GET)
+	public ResponseEntity<List<Auction>> findByCategory(@RequestBody Category category){
+		return new ResponseEntity<List<Auction>>(database.findAuctionByCategory(category), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/login/auction/search", method = RequestMethod.GET)
 	public ResponseEntity<List<Auction>> findBySearch(@RequestBody String search){
 		return new ResponseEntity<List<Auction>>(database.findAuctionBySearch(search), HttpStatus.OK);

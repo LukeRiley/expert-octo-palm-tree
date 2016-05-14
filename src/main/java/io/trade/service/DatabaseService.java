@@ -1,3 +1,4 @@
+
 package io.trade.service;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface DatabaseService {
 	public List<Auction> findAuctionByUser(Users user);
 	
 	public List<Auction> findAuctionByItem(Item item);
+	
+	public List<Auction> findAuctionByCategory(Category category);
 	
 	public List<Auction> findAuctionBySearch(String search);
 
@@ -41,6 +44,8 @@ public interface DatabaseService {
 	public List<Item> findAllItem();
 
 	public List<Item> findItemByUser(Users user);
+	
+	public List<Item> findItemByCategory(Category category);
 	
 	public List<Item> findItemBySearch(String search);
 

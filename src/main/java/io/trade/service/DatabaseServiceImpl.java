@@ -40,6 +40,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
+	public List<Auction> findAuctionByCategory(Category category) {
+		return auctions.findByCategory(category);
+	}
+
+	@Override
 	public List<Auction> findAuctionBySearch(String search) {
 		return auctions.findBySearch(search);
 	}
@@ -92,6 +97,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	@Override
 	public List<Item> findItemByUser(Users user) {
 		return items.findByUser(user);
+	}
+
+	@Override
+	public List<Item> findItemByCategory(Category category) {
+		return items.findByCategory(category);
 	}
 
 	@Override
