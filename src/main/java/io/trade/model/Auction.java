@@ -21,14 +21,14 @@ public class Auction {
 	private Item item;
 	
 	@ManyToOne
-	private Users user;
+	private Users users;
 		
 	public Auction(Instant startDate, Instant endDate, Item item, Users user) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.item = item;
-		this.user = user;
+		this.users = user;
 	}
 
 	public Auction() {
@@ -67,11 +67,11 @@ public class Auction {
 	}
 
 	public Users getUser() {
-		return user;
+		return users;
 	}
 
 	public void setUser(Users user) {
-		this.user = user;
+		this.users = user;
 	}
 
 }

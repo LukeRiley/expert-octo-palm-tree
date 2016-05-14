@@ -11,6 +11,7 @@ import io.trade.model.Item;
 public interface ItemRepository extends CrudRepository<Item, Integer> {
 	
 	List<Item> findAll();
-	
+	List<Item> findByNameContains(String search);
+	List<Item> findByDescriptionContains(String search);
 }
 
