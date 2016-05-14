@@ -45,6 +45,7 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public void add(Auction auction) {
+		database.addItem(auction.getItem());
 		auctions.save(auction);
 	}
 
