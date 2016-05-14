@@ -11,6 +11,7 @@ import io.trade.model.Users;
 import io.trade.repository.UserDetailsRepository;
 import io.trade.repository.UserRoleRepository;
 import io.trade.repository.UsersRepository;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -37,14 +38,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDetails findDetailsByUser(Users user) {
 		List<UserDetails> d = details.findByUsers(user);
-		if(d.isEmpty())
+		if (d.isEmpty())
 			return null;
 		return d.get(0);
 	}
 
 	@Override
 	public void addDetails(UserDetails userDetails) {
-		details.save(userDetails);
+		try {
+			details.save(userDetails);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -55,14 +60,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserRoles findRolesByUser(Users user) {
 		List<UserRoles> r = roles.findByUsers(user);
-		if(r.isEmpty())
+		if (r.isEmpty())
 			return null;
 		return r.get(0);
 	}
 
 	@Override
 	public void addRoles(UserRoles userRoles) {
-		roles.save(userRoles);
+		try {
+			roles.save(userRoles);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -73,14 +82,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Users findByUserName(String userName) {
 		List<Users> r = users.findByUserName(userName);
-		if(r.isEmpty())
+		if (r.isEmpty())
 			return null;
 		return r.get(0);
 	}
 
 	@Override
 	public void add(Users user) {
-		users.save(user);
+		try {
+			users.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

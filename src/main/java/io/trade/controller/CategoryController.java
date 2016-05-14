@@ -23,17 +23,17 @@ public class CategoryController {
 		this.database = db;
 	}
 
-	@RequestMapping(value = "/login/category/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/category/all", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> findAll(){
 		return new ResponseEntity<List<Category>>(database.findAllCategory(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/category/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/category/user", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> findByUser(@RequestBody String name){
 		return new ResponseEntity<List<Category>>(database.findCategoryByName(name), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/category/add", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/auth/category/add", method = RequestMethod.POST, consumes = "application/json")
 	public void add(@RequestBody Category category){
 		database.addCategory(category);
 	}

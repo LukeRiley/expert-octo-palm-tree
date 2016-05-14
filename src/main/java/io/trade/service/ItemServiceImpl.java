@@ -43,7 +43,11 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public void add(Item item) {
+		try{
 		items.save(item);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override

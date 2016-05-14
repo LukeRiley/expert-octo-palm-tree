@@ -23,22 +23,22 @@ public class BidController {
 		this.database = db;
 	}
 
-	@RequestMapping(value = "/login/bid/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/bid/all", method = RequestMethod.GET)
 	public ResponseEntity<List<Bid>> findAll(){
 		return new ResponseEntity<List<Bid>>(database.findAllBid(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/bid/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/bid/user", method = RequestMethod.GET)
 	public ResponseEntity<List<Bid>> findByUser(@RequestBody Users user){
 		return new ResponseEntity<List<Bid>>(database.findBidByUser(user), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/bid/item", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/bid/item", method = RequestMethod.GET)
 	public ResponseEntity<List<Bid>> findByAuction(@RequestBody Auction auction){
 		return new ResponseEntity<List<Bid>>(database.findBidByAuction(auction), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/bid/add", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/auth/bid/add", method = RequestMethod.POST, consumes = "application/json")
 	public void add(@RequestBody Bid bid){
 		database.addBid(bid);
 	}

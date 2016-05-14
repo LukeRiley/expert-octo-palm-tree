@@ -39,7 +39,11 @@ public class BidServiceImpl implements BidService {
 
 	@Override
 	public void add(Bid bid) {
+		try{
 		bids.save(bid);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

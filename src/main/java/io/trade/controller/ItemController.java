@@ -24,24 +24,28 @@ public class ItemController {
 		this.database = db;
 	}
 
-	@RequestMapping(value = "/login/item/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/item/all", method = RequestMethod.GET)
 	public ResponseEntity<List<Item>> findAll(){
 		return new ResponseEntity<List<Item>>(database.findAllItem(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/item/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/item/user", method = RequestMethod.GET)
 	public ResponseEntity<List<Item>> findByUser(@RequestBody Users user){
 		return new ResponseEntity<List<Item>>(database.findItemByUser(user), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/item/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/item/search", method = RequestMethod.GET)
 	public ResponseEntity<List<Item>> findBySearch(@RequestBody String search){
 		return new ResponseEntity<List<Item>>(database.findItemBySearch(search), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login/item/add", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/auth/item/add", method = RequestMethod.POST, consumes = "application/json")
 	public void add(@RequestBody Item item){
+		try{
 		database.addItem(item);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

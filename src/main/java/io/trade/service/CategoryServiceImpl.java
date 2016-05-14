@@ -32,7 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void add(Category category) {
+		try{
 		categories.save(category);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }
