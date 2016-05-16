@@ -17,13 +17,13 @@ public class UserDetails {
 	private String biography;
 	
 	@OneToOne
-	private Users user;
+	private Users users;
 
 	public UserDetails(String realName, String biography, Users user) {
 		super();
 		this.realName = realName;
 		this.biography = biography;
-		this.user = user;
+		this.users = user;
 	}
 
 	public UserDetails() {
@@ -54,11 +54,11 @@ public class UserDetails {
 	}
 
 	public Users getUser() {
-		return user;
+		return users;
 	}
 
 	public void setUser(Users user) {
-		this.user = user;
+		this.users = user;
 	}
 
 }

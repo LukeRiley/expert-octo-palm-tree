@@ -10,14 +10,14 @@ public class UserRoles {
 	private Integer id;
 	
 	@OneToOne
-	private Users user;
+	private Users users;
 	
 	@Column(name = "role", nullable = false)
 	private String role;
 	
 	public UserRoles(Users user, String role) {
 		super();
-		this.user = user;
+		this.users = user;
 		this.role = role;
 	}
 
@@ -33,11 +33,11 @@ public class UserRoles {
 	}
 
 	public Users getUser() {
-		return user;
+		return users;
 	}
 
 	public void setUser(Users user) {
-		this.user = user;
+		this.users = user;
 	}
 
 	public String getRole() {

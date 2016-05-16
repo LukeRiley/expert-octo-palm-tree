@@ -11,6 +11,6 @@ import io.trade.model.Category;
 public interface CategoryRepository extends CrudRepository<Category, Integer> {
 	
 	List<Category> findAll();
-	
+	List<Category> findByName(String name);
 }
 
