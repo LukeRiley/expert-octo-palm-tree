@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Create Auction Page</title>
+    </head>
+    <body>
+    	<h1>Create Auction</h1>
+     	<!-- Form Should submit a Auction object using JSON -->   	
+        <form enctype="application/json">
+        	<table>
+     		    <tr>
+					<td><label>Auction Length</label></td>
+					<td><input type="number" id="length" name="length" onkeyup="checkLength()"/></td>
+					<td><label id="validLength"></label></td>
+        		</tr>
+        		<tr>
+					<td><label>Item Name</label></td>
+					<td><input type="text" name="item[name]"/></td>
+        		</tr>
+        		<tr>
+					<td><label>Description</label></td>
+					<td><input type="text" name="item[description]"/></td>
+        		</tr>
+        		<tr>
+					<td><label>Category</label></td>
+					<td><input type="text" name="item[category]"/></td>
+        		</tr>
+        		<tr>
+        			<td><input type="submit" value="Create Auction" id="createAuctionBtn"/></td>
+        		</tr>
+        	</table>
+        </form>
+        
+        <script>
+        	//Verification Scripts
+        	function checkLength(){
+        		var auctionLen = document.getElementById("length").value;
+        		
+        		if(auctionLen < 1){
+        			document.getElementById("validLenght").innerHTML = "Auction duration must be at least one day";
+					document.getElementById("signUpBtn").disabled = true;	
+        		}
+        		else{
+        			document.getElementById("validLenght").innerHTML = "";
+   					document.getElementById("signUpBtn").disabled = false;	
+        		}
+       		}
+
+        </script>
+        
+    </body>
+</html>
