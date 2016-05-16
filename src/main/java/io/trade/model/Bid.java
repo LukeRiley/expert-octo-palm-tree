@@ -17,7 +17,7 @@ public class Bid {
 	private Instant date;
 
 	@OneToOne
-	private Users user;
+	private Users users;
 	
 	@OneToOne
 	private Auction auction;
@@ -26,7 +26,7 @@ public class Bid {
 		super();
 		this.amount = amount;
 		this.date = date;
-		this.user = user;
+		this.users = user;
 		this.auction = auction;
 	}
 
@@ -58,11 +58,11 @@ public class Bid {
 	}
 
 	public Users getUser() {
-		return user;
+		return users;
 	}
 
 	public void setUser(Users user) {
-		this.user = user;
+		this.users = user;
 	}
 
 	public Auction getAuction() {
