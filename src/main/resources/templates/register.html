@@ -5,57 +5,115 @@
         <title>Sign Up Page</title>
     </head>
     <body>
-    	<h1>Account Sign Up</h1>
+    	<h1 id = "txt">Account Sign Up</h1>
     	<!-- Form Should submit a UserDetails object using JSON -->
         <form enctype="application/json">
         	<table>
         		<tr><!-- Verify Unique -->
         			<td><label> User Name : </label></td>
-        			<td><input type="text" id="userName" name="user[userName]" onkeyup="checkUserName()"/></td>
-        			<td><label id="UniqueUserName"></label>		<!-- Make Font Color RED --></td>
+        			<td><input type="text" id="userName" onkeyup="checkUserName()"/></td>
+        			<td><label id="UniqueUserName" style="color:#FF0000"></label>		<!-- Make Font Color RED --></td>
         		</tr>
         		<tr>
         			<td><label> Real Name : </label></td>
-        			<td><input type="text" name="realName"/></td>
+        			<td><input type="text" /></td>
         		</tr>
         		<tr>
         			<td><label> Password:</label></td>
-        			<td><input type="password" id="new_pass" name="user[password]" onkeyup="checkPassword()"/></td>
+        			<td><input type="password" id="new_pass" onkeyup="checkPassword()"/></td>
         		</tr>
         		<tr><!-- Verify Matches Password-->
         			<td><label> Confirm Password:</label></td>
         			<td><input type="password" id="confirm_pass" onkeyup="checkPassword()"/></td>
-        			<td><label id="validPassword"></label>		<!-- Make Font Color RED --></td>
+        			<td><label id="validPassword" style="color:#FF0000"></label>		<!-- Make Font Color RED --></td>
         		</tr>
         		<tr>
         			<td>    			
-	        			<input type="submit" value="Sign Up" id="signUpBtn"/>
+	        			<button type="submit" id="signUpBtn">Sign Up</button>
         			</td>
         		</tr>
         	</table>
         </form>
         
-        <script>
-        	function checkUserName(){
-        		var userName = document.getElementById("userName").value;
+        
+        
+    </body>
+    <footer>
+   		<!-- import jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    	<script>
+	        var originalUser = null;
+        
+			$(document).ready(function(){
+				$("#signUpBtn").click(function(){
+					var output = {"userName":"", "password":"","enabled":1};
+					output.userName = $("#userName").val();
+					output.password = $("#new_pass").val();
+					
+					if (originalUser == null) {
+						$.ajax({
+							type: "POST",
+							url: "/auth/user/add",
+							contentType: "application/json",
+							data: JSON.stringify(output),
+							success: function(msg, status, jqXHR){
+								console.log("WIN");
+								
+							},
+							error: function(){
+								console.log("LOSE");
+							}
+						});
+					}
+					
+					//Need to make new role for new user
+				});
+			});
+			
+			function checkUserName(){
+				var userName = document.getElementById("userName").value;
         		//Check userName value is not in database
+				
+        		/*				NOT YET WORKING
+				$.ajax({
+							type: "GET",
+							contentType: "application/json",
+							data:JSON.stringify({"name":userName}),
+							url: "/auth/user/username",
+							success: function(msg, status, jqXHR){
+								console.log(msg);
+								if(msg==""){
+					        		if(document.getElementById("validPassword").innerHTML == ""){
+					        			document.getElementById("signUpBtn").disabled = false;
+					        		}
+								}
+								else{
+			        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
+			    					document.getElementById("signUpBtn").disabled = true;
+								}
+								console.log(msg);
+							},
+							error: function(){
+							}
+						});
+        		*/
+        		
         		
         		/*
         		for(String screenName : Users.username){
         			if(userName == screenName){
-        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
-    					document.getElementById("signUpBtn").disabled = true;
         			}
         		}
         		if(document.getElementById("validPassword").innerHTML == ""){
         			document.getElementById("signUpBtn").disabled = false;
         		}
         		*/
-        	}
-        
-        	function checkPassword(){
+			}
+			
+			function checkPassword(){
         		//Also Check for Complexity ?
-        		
+        		console.log("here");
         		var pass = document.getElementById("new_pass").value;
         		var confirm_pass = document.getElementById("confirm_pass").value;
         		if(pass != confirm_pass){
@@ -70,6 +128,5 @@
         		}
         	}
         </script>
-        
-    </body>
+    </footer>
 </html>
