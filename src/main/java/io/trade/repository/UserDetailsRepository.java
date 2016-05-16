@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import io.trade.model.*;
+import io.trade.model.*;;
 
 @Repository
-public interface UserRoleRepository extends CrudRepository<UserRoles, Integer> {
+public interface UserDetailsRepository extends CrudRepository<UserDetails, Integer> {
 	
-	List<UserRoles> findAll();
-	List<UserRoles> findByUsers(Users user);
+	List<UserDetails> findAll();
+	List<UserDetails> findByUsers(Users user);
 }
 
