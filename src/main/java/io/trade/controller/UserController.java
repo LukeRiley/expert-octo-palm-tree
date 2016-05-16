@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,23 +26,23 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/details/all", method = RequestMethod.GET)
-	public ResponseEntity<List<UserDetails>> findAllDetails(){
-		return new ResponseEntity<List<UserDetails>>(database.findAllUserDetails(), HttpStatus.OK);
+	public ResponseEntity<List<UsersDetails>> findAllDetails(){
+		return new ResponseEntity<List<UsersDetails>>(database.findAllUserDetails(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/auth/details/user", method = RequestMethod.GET)
-	public ResponseEntity<UserDetails> findDetailsByUser(@RequestBody Users user){
-		return new ResponseEntity<UserDetails>(database.findUserDetailsByUser(user), HttpStatus.OK);
+	public ResponseEntity<UsersDetails> findDetailsByUser(@RequestBody Users user){
+		return new ResponseEntity<UsersDetails>(database.findUserDetailsByUser(user), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/auth/details/add", method = RequestMethod.POST, consumes = "application/json")
-	public void addDetails(@RequestBody UserDetails details){
+	public void addDetails(@RequestBody UsersDetails details){
 		database.addUserDetails(details);
 	}
 	//--------------
 	@RequestMapping(value = "/admin/roles/all", method = RequestMethod.GET)
-	public ResponseEntity<List<UserDetails>> findAllRoles(){
-		return new ResponseEntity<List<UserDetails>>(database.findAllUserDetails(), HttpStatus.OK);
+	public ResponseEntity<List<UsersDetails>> findAllRoles(){
+		return new ResponseEntity<List<UsersDetails>>(database.findAllUserDetails(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/auth/roles/user", method = RequestMethod.GET)
@@ -66,5 +68,12 @@ public class UserController {
 	@RequestMapping(value = "/auth/user/add", method = RequestMethod.POST, consumes = "application/json")
 	public void add(@RequestBody Users user){
 		database.addUsers(user);
+	}
+	
+	@RequestMapping(value = "/auth/user/current", method = RequestMethod.GET)
+	public ResponseEntity<UsersDetails> findUserByUserName(){
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		return new ResponseEntity<UsersDetails>(database.findUserDetailsByUser(database.findUsersByUserName(username)), HttpStatus.OK);
 	}
 }
