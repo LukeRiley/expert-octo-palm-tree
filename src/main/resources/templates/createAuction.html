@@ -9,15 +9,10 @@
      	<!-- Form Should submit a Auction object using JSON -->   	
         <form enctype="application/json">
         	<table>
-        		<tr>
-					<td><label>Start Date</label></td>
-					<td><input type="date" id="startDate" name="startDate"/></td>
-					<td><label id="validStart"></label></td>
-        		</tr>
      		    <tr>
-					<td><label>End Date</label></td>
-					<td><input type="date" id="endDate" name="endDate"/></td>
-					<td><label id="validEnd"></label></td>
+					<td><label>Auction Length</label></td>
+					<td><input type="number" id="length" name="length" onkeyup="checkLength()"/></td>
+					<td><label id="validLength"></label></td>
         		</tr>
         		<tr>
 					<td><label>Item Name</label></td>
@@ -39,6 +34,19 @@
         
         <script>
         	//Verification Scripts
+        	function checkLength(){
+        		var auctionLen = document.getElementById("length").value;
+        		
+        		if(auctionLen < 1){
+        			document.getElementById("validLenght").innerHTML = "Auction duration must be at least one day";
+					document.getElementById("signUpBtn").disabled = true;	
+        		}
+        		else{
+        			document.getElementById("validLenght").innerHTML = "";
+   					document.getElementById("signUpBtn").disabled = false;	
+        		}
+       		}
+
         </script>
         
     </body>
