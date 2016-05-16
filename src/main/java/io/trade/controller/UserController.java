@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.trade.model.*;
@@ -58,7 +59,7 @@ public class UserController {
 		return new ResponseEntity<List<Users>>(database.findAllUsers(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/auth/user/username", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/user/username", method = RequestMethod.POST)
 	public ResponseEntity<Users> findUserByUserName(@RequestBody String name){
 		return new ResponseEntity<Users>(database.findUsersByUserName(name), HttpStatus.OK);
 	}
@@ -66,5 +67,6 @@ public class UserController {
 	@RequestMapping(value = "/auth/user/add", method = RequestMethod.POST, consumes = "application/json")
 	public void add(@RequestBody Users user){
 		database.addUsers(user);
+		addRoles(new UserRoles(user, "ROLE_USER"));
 	}
 }
