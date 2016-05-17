@@ -4,7 +4,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.*;
 
 @Entity
-public class UserDetails {
+public class UsersDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,14 @@ public class UserDetails {
 	@OneToOne
 	private Users users;
 
-	public UserDetails(String realName, String biography, Users user) {
+	public UsersDetails(String realName, String biography, Users user) {
 		super();
 		this.realName = realName;
 		this.biography = biography;
 		this.users = user;
 	}
 
-	public UserDetails() {
+	public UsersDetails() {
 	}
 
 	public Integer getId() {

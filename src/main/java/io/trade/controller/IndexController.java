@@ -47,14 +47,14 @@ public class IndexController {
 		user1 = new Users("admin", "admin", 1);
 		UserRoles ur1 = new UserRoles(user1, "ROLE_ADMIN");
 		UserRoles ur2 = new UserRoles(user1, "ROLE_USER");
-		UserDetails ud1 = new UserDetails("John Doe", "I am me", user1);
+		UsersDetails ud1 = new UsersDetails("John Doe", "I am me", user1);
 		database.addUsers(user1);
 		database.addUserRoles(ur1);
 		database.addUserRoles(ur2);
 		database.addUserDetails(ud1);
 		user2 = new Users("user", "user", 1);
 		UserRoles ur3 = new UserRoles(user2, "ROLE_USER");
-		UserDetails ud2 = new UserDetails("Joe Blogs", "Hi all my name is...etc", user2);
+		UsersDetails ud2 = new UsersDetails("Joe Blogs", "Hi all my name is...etc", user2);
 		database.addUsers(user2);
 		database.addUserRoles(ur3);
 		database.addUserDetails(ud2);

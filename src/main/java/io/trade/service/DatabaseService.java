@@ -53,11 +53,11 @@ public interface DatabaseService {
 
 	// UserDetails
 
-	public List<UserDetails> findAllUserDetails();
+	public List<UsersDetails> findAllUserDetails();
 
-	public UserDetails findUserDetailsByUser(Users user);
+	public UsersDetails findUserDetailsByUser(Users user);
 
-	public void addUserDetails(UserDetails userDetails);
+	public void addUserDetails(UsersDetails usersDetails);
 
 	// UserRoles
 

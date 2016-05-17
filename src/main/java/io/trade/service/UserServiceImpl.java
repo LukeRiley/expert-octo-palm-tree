@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.trade.model.UserDetails;
+import io.trade.model.UsersDetails;
 import io.trade.model.UserRoles;
 import io.trade.model.Users;
 import io.trade.repository.UserDetailsRepository;
@@ -31,22 +31,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDetails> findAllDetails() {
+	public List<UsersDetails> findAllDetails() {
 		return details.findAll();
 	}
 
 	@Override
-	public UserDetails findDetailsByUser(Users user) {
-		List<UserDetails> d = details.findByUsers(user);
+	public UsersDetails findDetailsByUser(Users user) {
+		List<UsersDetails> d = details.findByUsers(user);
 		if (d.isEmpty())
 			return null;
 		return d.get(0);
 	}
 
 	@Override
-	public void addDetails(UserDetails userDetails) {
+	public void addDetails(UsersDetails usersDetails) {
 		try {
-			details.save(userDetails);
+			details.save(usersDetails);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
