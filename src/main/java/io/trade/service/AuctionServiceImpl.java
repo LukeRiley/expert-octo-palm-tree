@@ -1,5 +1,7 @@
 package io.trade.service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +48,14 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public void add(Auction auction) {
-		database.addItem(auction.getItem());
 		try{
+		if (!database.findAllItem().contains(auction.getItem()))
+			database.addItem(auction.getItem());
+		if(auction.getStartDate() == null){
+			Instant instant = Instant.now();
+			auction.setStartDate(instant);
+			auction.setEndDate(instant.plus(Duration.ofDays(10)));
+		}
 		auctions.save(auction);
 		} catch (Exception e){
 			e.printStackTrace();
