@@ -40,12 +40,13 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value = "/auth/item/add", method = RequestMethod.POST, consumes = "application/json")
-	public void add(@RequestBody Item item){
+	public Item add(@RequestBody Item item){
 		try{
 		database.addItem(item);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		return item;
 	}
 
 }

@@ -21,6 +21,7 @@ import io.trade.service.DatabaseService;
  */
 @Controller
 public class IndexController {
+	private boolean setup = false;
 	
 	private Users user1;
 	private Users user2;
@@ -34,8 +35,11 @@ public class IndexController {
 	
 	@RequestMapping(value = "/")
 	public String index() {
-		addUsers();
-		addOthers();
+		if(!setup){
+			addUsers();
+			addOthers();
+			setup = true;
+		}
 		return "home";
 	}
 	@RequestMapping(value = "/login")

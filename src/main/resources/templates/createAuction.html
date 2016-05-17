@@ -5,49 +5,138 @@
         <title>Create Auction Page</title>
     </head>
     <body>
-    	<h1>Create Auction</h1>
-     	<!-- Form Should submit a Auction object using JSON -->   	
-        <form enctype="application/json">
-        	<table>
-     		    <tr>
-					<td><label>Auction Length</label></td>
-					<td><input type="number" id="length" name="length" onkeyup="checkLength()"/></td>
-					<td><label id="validLength"></label></td>
-        		</tr>
-        		<tr>
-					<td><label>Item Name</label></td>
-					<td><input type="text" name="item[name]"/></td>
-        		</tr>
-        		<tr>
-					<td><label>Description</label></td>
-					<td><input type="text" name="item[description]"/></td>
-        		</tr>
-        		<tr>
-					<td><label>Category</label></td>
-					<td><input type="text" name="item[category]"/></td>
-        		</tr>
-        		<tr>
-        			<td><input type="submit" value="Create Auction" id="createAuctionBtn"/></td>
-        		</tr>
-        	</table>
-        </form>
+    	<h1 id = "txt">Create Auction</h1>
+    	<!-- Form Should submit a UserDetails object using JSON -->
+       	<table>
+       		<tr><!-- Verify Unique -->
+				<td><label>Auction Length (Days)</label></td>
+				<td><input type="number" id="length" name="length" onkeyup="checkLength()" value="1"/></td>
+				<td><label id="validLength" style="color:#FF0000"></label></td>
+       		</tr>
+ 		    <tr>
+				<td><label>Item Name</label></td>
+				<td><input type="text" id="name"/></td>
+      		</tr>
+     	    <tr>
+				<td><label>Description</label></td>
+				<td><input type="text" id="desc"/></td>
+       		</tr>
+       		<tr>
+				<td><label>Category</label></td>
+				<td><input type="text" id="cat"/></td>
+       		</tr>
+     	
+       		<tr>
+       			<td>    			
+        			<button id="createAutcionBtn">Create Auction</button>
+       			</td>
+       		</tr>
+		</table>        
         
-        <script>
-        	//Verification Scripts
-        	function checkLength(){
-        		var auctionLen = document.getElementById("length").value;
-        		
-        		if(auctionLen < 1){
-        			document.getElementById("validLenght").innerHTML = "Auction duration must be at least one day";
-					document.getElementById("signUpBtn").disabled = true;	
-        		}
-        		else{
-        			document.getElementById("validLenght").innerHTML = "";
-   					document.getElementById("signUpBtn").disabled = false;	
-        		}
-       		}
-
-        </script>
         
     </body>
+    <footer>
+   		<!-- import jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    	<script>
+	        var originalUser = null;
+        
+			$(document).ready(function(){
+				$("#createAutcionBtn").click(function(){
+					var my_category = {"name":""};
+					my_category.name = $("#cat").val();
+
+					var my_item = {"name":"", "description":"", "category":""};
+					my_item.name = $("#name").val();
+					my_item.description = $("#desc").val();
+					
+					var output = {"startDate":"", "endDate":"","item":"", "user":""};
+					var auct_start = new Date();
+					var auct_end = new Date();
+					auct_end.setDate(auct_end.getDate() + $("#length").val());
+					
+					output.startDate = auct_start;
+					output.endDate = auct_end;
+										
+					console.log(JSON.stringify(my_category));
+					console.log(JSON.stringify(my_item));
+					console.log(JSON.stringify(output));
+					$.ajax({
+						type: "GET",
+						datatype: "json",
+						url: "/auth/user/current",
+						success: function(usr_detail){
+								console.log("WIN usr_detail");
+								console.log(usr_detail.users);
+
+								output.user = usr_detail.users;
+								
+								$.ajax({
+									type: "POST",
+									url: "/auth/category/add",
+									contentType: "application/json",
+									data: JSON.stringify(my_category),
+									success: function(cat){
+										console.log("WIN CAT");
+										my_item.category = cat;
+										
+										$.ajax({
+											type: "POST",
+											url: "/auth/item/add",
+											contentType: "application/json",
+											data: JSON.stringify(my_item),
+											success: function(itm){
+												console.log("WIN ITM");
+												output.item = itm;
+
+												$.ajax({
+													type: "POST",
+													url: "/auth/auction/add",
+													contentType: "application/json",
+													data: JSON.stringify(output),
+													success: function(msg, status, jqXHR){
+														console.log("DONE");
+													},
+													error: function(){
+														console.log("FAILURE");
+													}
+												});												
+											},
+											error : function(){
+												console.log("LOSE ITM")
+											}
+										});
+									},
+									error: function(){
+										console.log("LOSE CAT");
+									}
+								});								
+
+						},
+						error: function(){
+							console.log("LOSE USR_detail");
+						}
+					});
+					
+					//Need to make new role for new user
+				});
+			});
+			
+			
+			
+			function checkLength(){
+				var length = parseInt(document.getElementById("length").value);
+				console.log(typeof len);
+				if(length <= 0){
+					document.getElementById("validLength").innerHTML = "All Auctions must run for one day minimum";
+					document.getElementById("createAutcionBtn").disabled = true;
+				}
+				else{
+					document.getElementById("validLength").innerHTML = "";
+					document.getElementById("createAutcionBtn").disabled = false;					
+				}
+			}
+        </script>
+    </footer>
 </html>
