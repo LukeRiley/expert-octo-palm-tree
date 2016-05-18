@@ -34,7 +34,8 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/auth/category/add", method = RequestMethod.POST, consumes = "application/json")
-	public void add(@RequestBody Category category){
+	public Category add(@RequestBody Category category){
 		database.addCategory(category);
+		return category;
 	}
 }

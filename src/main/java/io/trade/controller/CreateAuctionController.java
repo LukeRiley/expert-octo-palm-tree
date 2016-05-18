@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CreateAuctionController {
 
 	@RequestMapping(value = "/createAuction")
-	public String register() {
+	public String createAuction() {
 		
 		return "createAuction";
 	}
