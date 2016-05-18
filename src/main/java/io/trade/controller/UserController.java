@@ -72,7 +72,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/auth/user/current", method = RequestMethod.GET)
-	public ResponseEntity<UsersDetails> findUserByUserName(){
+	public ResponseEntity<UsersDetails> findCurrentUser(){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		return new ResponseEntity<UsersDetails>(database.findUserDetailsByUser(database.findUsersByUserName(username)), HttpStatus.OK);
