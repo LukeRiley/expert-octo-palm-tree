@@ -8,11 +8,6 @@
     	<h1 id = "txt">Create Auction</h1>
     	<!-- Form Should submit a UserDetails object using JSON -->
        	<table>
-       		<tr><!-- Verify Unique -->
-				<td><label>Auction Length (Days)</label></td>
-				<td><input type="number" id="length" name="length" onkeyup="checkLength()" value="1"/></td>
-				<td><label id="validLength" style="color:#FF0000"></label></td>
-       		</tr>
  		    <tr>
 				<td><label>Item Name</label></td>
 				<td><input type="text" id="name"/></td>
@@ -52,9 +47,8 @@
 					my_item.description = $("#desc").val();
 					
 					var output = {"startDate":"", "endDate":"","item":"", "user":""};
-					var auct_start = new Date();
-					var auct_end = new Date();
-					auct_end.setDate(auct_end.getDate() + $("#length").val());
+					var auct_start = null;
+					var auct_end = null;
 					
 					output.startDate = auct_start;
 					output.endDate = auct_end;
@@ -68,9 +62,11 @@
 						url: "/auth/user/current",
 						success: function(usr_detail){
 								console.log("WIN usr_detail");
-								console.log(usr_detail.users);
+								console.log(usr_detail);
 
-								output.user = usr_detail.users;
+								console.log(usr_detail.user);
+
+								output.user = usr_detail.user;
 								
 								$.ajax({
 									type: "POST",
@@ -89,7 +85,8 @@
 											success: function(itm){
 												console.log("WIN ITM");
 												output.item = itm;
-
+												
+												console.log(JSON.stringify(output));
 												$.ajax({
 													type: "POST",
 													url: "/auth/auction/add",
@@ -122,21 +119,6 @@
 					//Need to make new role for new user
 				});
 			});
-			
-			
-			
-			function checkLength(){
-				var length = parseInt(document.getElementById("length").value);
-				console.log(typeof len);
-				if(length <= 0){
-					document.getElementById("validLength").innerHTML = "All Auctions must run for one day minimum";
-					document.getElementById("createAutcionBtn").disabled = true;
-				}
-				else{
-					document.getElementById("validLength").innerHTML = "";
-					document.getElementById("createAutcionBtn").disabled = false;					
-				}
-			}
         </script>
     </footer>
 </html>
