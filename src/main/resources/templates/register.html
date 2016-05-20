@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Sign Up Page</title>
+    </head>
+    <body>
+    	<h1 id = "txt">Account Sign Up</h1>
+    	<!-- Form Should submit a UserDetails object using JSON -->
+       	<table>
+       		<tr><!-- Verify Unique -->
+       			<td><label> User Name : </label></td>
+       			<td><input type="text" id="userName" onkeyup="checkUserName()"/></td>
+       			<td><label id="UniqueUserName" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr>
+       			<td><label> Real Name : </label></td>
+       			<td><input type="text" /></td>
+       		</tr>
+       		<tr>
+       			<td><label> Password:</label></td>
+       			<td><input type="password" id="new_pass" onkeyup="checkPassword()"/></td>
+       		</tr>
+       		<tr><!-- Verify Matches Password-->
+       			<td><label> Confirm Password:</label></td>
+       			<td><input type="password" id="confirm_pass" onkeyup="checkPassword()"/></td>
+       			<td><label id="validPassword" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr>
+       			<td>    			
+        			<button id="signUpBtn">Sign Up</button>
+       			</td>
+       		</tr>
+		</table>        
+        
+        
+    </body>
+    <footer>
+   		<!-- import jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    	<script>
+	        var originalUser = null;
+        
+			$(document).ready(function(){
+				$("#signUpBtn").click(function(){
+					var output = {"userName":"", "password":"","enabled":1};
+					output.userName = $("#userName").val();
+					output.password = $("#new_pass").val();
+					console.log(JSON.stringify(output));
+					if (originalUser == null) {
+						$.ajax({
+							type: "POST",
+							url: "/auth/user/add",
+							contentType: "application/json",
+							data: JSON.stringify(output),
+							success: function(msg, status, jqXHR){
+								console.log("WIN");
+								
+							},
+							error: function(){
+								console.log("LOSE");
+							}
+						});
+					}
+					
+					//Need to make new role for new user
+				});
+			});
+			
+			function checkUserName(){
+				var userName = document.getElementById("userName").value;
+        		//Check userName value is not in database
+        		$.ajax({
+							type: "POST",
+							contentType: "text/plain",
+							data:userName,
+							url: "/auth/user/username",
+							success: function(result){
+								if(result==""){
+					        		if(document.getElementById("validPassword").innerHTML == ""){
+					        			document.getElementById("signUpBtn").disabled = false;
+				        				document.getElementById("UniqueUserName").innerHTML = "";
+					        		}
+								}
+								else{
+			        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
+			    					document.getElementById("signUpBtn").disabled = true;
+								}
+							},
+							error: function(){
+							}
+						});
+       			
+  			}
+			
+			function checkPassword(){
+        		//Also Check for Complexity ?
+        		console.log("here");
+        		var pass = document.getElementById("new_pass").value;
+        		var confirm_pass = document.getElementById("confirm_pass").value;
+        		if(pass != confirm_pass){
+					document.getElementById("validPassword").innerHTML = "Passwords do not match";
+					document.getElementById("signUpBtn").disabled = true;
+        		}
+        		else{
+					document.getElementById("validPassword").innerHTML = "";
+					if(document.getElementById("UniqueUserName").innerHTML==""){
+						document.getElementById("signUpBtn").disabled = false;						
+					}
+        		}
+        	}
+        </script>
+    </footer>
+</html>

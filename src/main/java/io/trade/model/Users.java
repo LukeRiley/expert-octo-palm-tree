@@ -62,7 +62,10 @@ public class Users {
 	}
 
 	public void setEnabled(int enabled) {
-		this.enabled = enabled;
+		if(enabled == 1)
+			this.enabled = enabled;
+		else
+			this.enabled = 0;
 	}
 	
 	

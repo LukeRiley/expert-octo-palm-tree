@@ -2,17 +2,17 @@ package io.trade.service;
 
 import java.util.List;
 
-import io.trade.model.UserDetails;
+import io.trade.model.UsersDetails;
 import io.trade.model.UserRoles;
 import io.trade.model.Users;
 
 public interface UserService {
 
-	List<UserDetails> findAllDetails();
+	List<UsersDetails> findAllDetails();
 
-	UserDetails findDetailsByUser(Users user);
+	UsersDetails findDetailsByUser(Users user);
 
-	void addDetails(UserDetails userDetails);
+	void addDetails(UsersDetails usersDetails);
 
 	List<UserRoles> findAllRoles();
 

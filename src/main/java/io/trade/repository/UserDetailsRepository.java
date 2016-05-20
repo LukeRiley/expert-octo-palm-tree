@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import io.trade.model.*;;
 
 @Repository
-public interface UserDetailsRepository extends CrudRepository<UserDetails, Integer> {
+public interface UserDetailsRepository extends CrudRepository<UsersDetails, Integer> {
 	
-	List<UserDetails> findAll();
-	List<UserDetails> findByUsers(Users user);
+	List<UsersDetails> findAll();
+	List<UsersDetails> findByUsers(Users user);
 }
 

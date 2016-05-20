@@ -8,7 +8,7 @@ import io.trade.model.Auction;
 import io.trade.model.Bid;
 import io.trade.model.Category;
 import io.trade.model.Item;
-import io.trade.model.UserDetails;
+import io.trade.model.UsersDetails;
 import io.trade.model.UserRoles;
 import io.trade.model.Users;
 
@@ -115,18 +115,18 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public List<UserDetails> findAllUserDetails() {
+	public List<UsersDetails> findAllUserDetails() {
 		return users.findAllDetails();
 	}
 
 	@Override
-	public UserDetails findUserDetailsByUser(Users user) {
+	public UsersDetails findUserDetailsByUser(Users user) {
 		return users.findDetailsByUser(user);
 	}
 
 	@Override
-	public void addUserDetails(UserDetails userDetails) {
-		users.addDetails(userDetails);
+	public void addUserDetails(UsersDetails usersDetails) {
+		users.addDetails(usersDetails);
 	}
 
 	@Override
