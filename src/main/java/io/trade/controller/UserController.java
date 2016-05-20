@@ -66,9 +66,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/auth/user/add", method = RequestMethod.POST, consumes = "application/json")
-	public void add(@RequestBody Users user){
+	public Users add(@RequestBody Users user){
 		database.addUsers(user);
 		addRoles(new UserRoles(user, "ROLE_USER"));
+		return user;
 	}
 	
 	@RequestMapping(value = "/auth/user/current", method = RequestMethod.GET)

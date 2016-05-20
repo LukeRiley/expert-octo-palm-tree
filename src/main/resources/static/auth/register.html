@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Sign Up Page</title>
+    </head>
+    <body>
+    	<h1 id = "txt">Account Sign Up</h1>
+    	<!-- Form Should submit a UserDetails object using JSON -->
+       	<table>
+       		<tr><!-- Verify Unique -->
+       			<td><label> User Name : </label></td>
+       			<td><input type="text" id="userName" onkeyup="checkUserName()"/></td>
+       			<td><label id="UniqueUserName" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr>
+       			<td><label> Real Name : </label></td>
+       			<td><input id="realName" type="text" onkeyup="checkName()"/></td>
+      			<td><label id="hasName" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr>
+       			<td><label> Password:</label></td>
+       			<td><input type="password" id="new_pass" onkeyup="checkPassword()"/></td>
+       			<td><label id="hasPassword" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr><!-- Verify Matches Password-->
+       			<td><label> Confirm Password:</label></td>
+       			<td><input type="password" id="confirm_pass" onkeyup="checkPassword()"/></td>
+       			<td><label id="validPassword" style="color:#FF0000"></label></td>
+       		</tr>
+       		<tr>
+       			<td>    			
+        			<button id="signUpBtn">Sign Up</button>
+       			</td>
+       		</tr>
+		</table>        
+        
+        
+    </body>
+    <footer>
+   		<!-- import jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    	<script>
+	        var originalUser = null;
+        
+			$(document).ready(function(){
+				checkAll();
+				
+				$("#signUpBtn").click(function(){
+					var output = {"userName":"", "password":"","enabled":1};
+					output.userName = $("#userName").val();
+					output.password = $("#new_pass").val();
+					console.log(JSON.stringify(output));
+					if (originalUser == null) {
+						$.ajax({
+							type: "POST",
+							url: "/auth/user/add",
+							contentType: "application/json",
+							data: JSON.stringify(output),
+							success: function(user){
+								console.log("USER MADE");
+								
+								//Make User Details
+								var details = {"realName":"", "biography":"", "users":user}
+								details.realName = $("#realName").val();
+								$.ajax({
+									type: "POST",
+									url: "/auth/details/add",
+									contentType: "application/json",
+									data: JSON.stringify(details),
+									success: function(){
+										console.log("USER DETAILS MADE");
+							            window.location.href = "/login.html"
+									},
+									error: function(){
+										console.log("USER DETAILS NO MADE");										
+									}
+								});
+							},
+							error: function(){
+								console.log("USER NO MADE");
+							}
+						});
+					}
+					
+					//Need to make new role for new user
+				});
+			});
+		</script>
+		<script>
+			function checkUserName(){
+				var userName = document.getElementById("userName").value;
+				if(userName == ""){
+					document.getElementById("UniqueUserName").innerHTML = "A Username must be provided";
+				}
+				else{
+	        		//Check userName value is not in database
+	        		$.ajax({
+								type: "POST",
+								contentType: "text/plain",
+								data:userName,
+								url: "/auth/user/username",
+								success: function(result){
+									console.log(result);
+									if(result==""){
+										document.getElementById("UniqueUserName").innerHTML = "";
+									}
+									else{
+				        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
+				        			}
+								},
+								error: function(){
+								}
+							});					
+				}
+				disableSubmit();
+  			}
+		
+			function checkPassword(){
+        		//Also Check for Complexity ?
+        		var pass = document.getElementById("new_pass").value;
+        		var confirm_pass = document.getElementById("confirm_pass").value;
+        		if(pass == ""){
+        			document.getElementById("hasPassword").innerHTML = "A password must be provided";
+        		}
+        		else{
+					document.getElementById("hasPassword").innerHTML = "";        			
+        		}
+        		
+        		if(pass != confirm_pass){
+					document.getElementById("validPassword").innerHTML = "Passwords do not match";
+					
+				}
+        		else{
+					document.getElementById("validPassword").innerHTML = "";
+        		}
+        		disableSubmit(); 
+        	}
+			
+			function checkName(){
+				var name = document.getElementById("realName").value;
+				if(name == ""){
+					document.getElementById("hasName").innerHTML = "A real name must be provided";
+				}
+				else{
+					document.getElementById("hasName").innerHTML = "";
+				}
+				disableSubmit();
+			}
+			
+			function checkAll(){
+				checkUserName();
+				checkPassword();
+				checkName();
+			}
+
+			function disableSubmit(){
+				var valPass = document.getElementById("validPassword").innerHTML;
+				var valUser = document.getElementById("UniqueUserName").innerHTML;
+				var hasName = document.getElementById("hasName").innerHTML;
+				var hasPass = document.getElementById("hasPassword").innerHTML;
+				
+				if(valPass=="" && valUser == "" && hasName == "" && hasPass == ""){
+					document.getElementById("signUpBtn").disabled = false;					
+				}
+				else{
+					document.getElementById("signUpBtn").disabled = true;					
+				}
+			}
+        </script>
+    </footer>
+</html>
