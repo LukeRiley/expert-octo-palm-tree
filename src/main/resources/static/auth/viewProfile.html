@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <title>View Profile</title>
+    </head>
+    <body>
+    	<div id="loggedIn" style="display : none;">
+    		<table>
+    			<tr>
+    				<td><label>Real Name :</label></td>
+        			<td><label id="fullName"></label></td>
+   				</tr>
+   				<tr>
+    				<td><label>User Name :</label></td>
+        			<td><label id="userName"></label></td>
+   				</tr>
+  				<tr>
+    				<td><label>Biography :</label></td>
+        			<td><label id="bio"></label></td>
+   				</tr>
+    		</table>
+    	</div>
+    	<div id="not_loggedIn" style="display : none;">
+    		<label>In order to view this page you need to login</label>
+    	</div>
+    	<h1></h1>
+    </body>
+    <footer>
+    	<!-- import jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    	<script>
+			$(document).ready(function(){
+				$.ajax({
+					type: "GET",
+					datatype: "json",
+					url: "/auth/user/current",
+					success: function(usr_detail){
+						console.log("User Logged in Found");
+						constructProfile(usr_detail);
+					},
+					error: function(){
+						console.log("No ones logged in");
+						document.getElementById("not_loggedIn").style.display = 'block';
+					}	
+				});
+			});
+        </script>
+        <script>
+        	function constructProfile(usr_detail){
+				document.getElementById("loggedIn").style.display = 'block';
+        		$("#fullName").innerHTML = usr_detail.realName;
+        		$("#userName").innerHTML = usr_detail.users.userName;
+        		$("#bio").innerHTML = usr_detail.biography;
+        	}
+        </script>
+    </footer>    
+</html>

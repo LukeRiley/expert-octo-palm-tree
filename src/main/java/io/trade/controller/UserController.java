@@ -66,13 +66,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/auth/user/add", method = RequestMethod.POST, consumes = "application/json")
-	public void add(@RequestBody Users user){
+	public Users add(@RequestBody Users user){
 		database.addUsers(user);
 		addRoles(new UserRoles(user, "ROLE_USER"));
+		return user;
 	}
 	
 	@RequestMapping(value = "/auth/user/current", method = RequestMethod.GET)
-	public ResponseEntity<UsersDetails> findUserByUserName(){
+	public ResponseEntity<UsersDetails> findCurrentUser(){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		return new ResponseEntity<UsersDetails>(database.findUserDetailsByUser(database.findUsersByUserName(username)), HttpStatus.OK);
