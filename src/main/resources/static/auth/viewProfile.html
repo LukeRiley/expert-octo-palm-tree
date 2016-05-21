@@ -81,7 +81,7 @@
         	}
         	
         	function editData(state){        		
-       			$("#fullName").attr("readonly", !state);
+       			$("#realName").attr("readonly", !state);
        			$("#userName").attr("readonly", !state);
        			$("#bio").attr("readonly", !state);
        			
@@ -104,7 +104,7 @@
 					success: function(usr_detail){
 						var user = usr_detail.user;
 						
-						usr_detail.realName = $("#fullName").val();
+						usr_detail.realName = $("#realName").val();
 						usr_detail.biography = $("#bio").val();
 						
 						user.userName = $("#userName").val();
@@ -113,7 +113,7 @@
 							type: "POST",
 							contentType: "application/json",
 							data: JSON.stringify(usr_detail),
-							url: "/auth/details/edit",
+							url: "/auth/details/add",
 							success: function(res){
 								console.log("Details Updated");
 							},
@@ -126,7 +126,7 @@
 							type: "POST",
 							contentType: "application/json",
 							data: JSON.stringify(user),
-							url: "/auth/user/edit",
+							url: "/auth/user/add",
 							success: function(res){
 								console.log("User Updated");
 							},
