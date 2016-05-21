@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap eCommerce Template</title>
+<title>TradeIO Home</title>
 
 <!-- Bootstrap -->
-<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="../css/bootstrap.css">
+<link href="../css/tradeio.css" rel="stylesheet" type="text/css">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,24 +24,13 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="navbar-brand" href="#">TradeIO</a></div>
+      <a class="navbar-brand" href="/">TradeIO</a></div>
     
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"> </li>
         <li><a href="#">Browse</a></li>
-        <li class="dropdown">
-<ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a> </li>
-            <li><a href="#">Another action</a> </li>
-            <li><a href="#">Something else here</a> </li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a> </li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a> </li>
-          </ul>
-        </li>
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -52,9 +42,9 @@
         <li> </li>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login or Sign Up <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="/hello">Login</a> </li>
+            <li><a href="/login">Login</a> </li>
             <li class="divider"></li>
-            <li><a href="#">Sign Up</a> </li>
+            <li><a href="/register">Sign Up</a> </li>
           </ul>
         </li>
       </ul>
@@ -77,13 +67,13 @@
             <li data-target="#carousel1" data-slide-to="2" class=""> </li>
           </ol>
           <div class="carousel-inner">
-            <div class="item"> <img class="img-responsive" src="/img/carousel1.jpg" alt="thumb">
+            <div class="item"> <img class="img-responsive" src="../img/carousel1.jpg" alt="thumb">
               <div class="carousel-caption"> Buy and sell. Fast. From anywhere. </div>
             </div>
-            <div class="item active"> <img class="img-responsive" src="/img/carousel2.jpg" alt="thumb">
+            <div class="item active"> <img class="img-responsive" src="../img/carousel2.jpg" alt="thumb">
               <div class="carousel-caption"> Buy some lions. We won't judge. </div>
             </div>
-            <div class="item"> <img class="img-responsive" src="/img/carousel3.jpg" alt="thumb">
+            <div class="item"> <img class="img-responsive" src="../img/carousel3.jpg" alt="thumb">
               <div class="carousel-caption"> Or maybe some lego? </div>
             </div>
           </div>
@@ -94,12 +84,12 @@
   </div>
 <hr>
 <h2 class="text-center">Featured Products</h2>
-<h4 class="text-center">Login or Sign Up to continue</h4>
+<h4 class="text-center"><a href="/login">Login</a> or <a href="/login">Signup</a> to continue</h4>
 <hr>
 <div class="container">
   <div class="row text-center">
     <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-      <div class="thumbnail"> <img src="/img/product1.jpg" alt="Thumbnail Image 1" class="img-responsive">
+      <div class="thumbnail"> <img src="../img/product1.jpg" alt="Thumbnail Image 1" class="img-responsive">
         <div class="caption">
           <h3>Red Bird</h3>
           <p>Unopened in original packaging.</p>
@@ -108,7 +98,7 @@
       </div>
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-      <div class="thumbnail"> <img src="/img/product2.jpg" alt="Thumbnail Image 1" class="img-responsive">
+      <div class="thumbnail"> <img src="../img/product2.jpg" alt="Thumbnail Image 1" class="img-responsive">
         <div class="caption">
           <h3>Blue Bird</h3>
           <p>Comes with instruction manual.</p>
@@ -117,7 +107,7 @@
       </div>
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-      <div class="thumbnail"> <img src="/img/product3.jpg" alt="Thumbnail Image 1" class="img-responsive">
+      <div class="thumbnail"> <img src="../img/product3.jpg" alt="Thumbnail Image 1" class="img-responsive">
         <div class="caption">
           <h3>Set of two Purple Birds</h3>
           <p>Rare complete set.</p>
@@ -126,7 +116,7 @@
       </div>
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6 hidden-lg hidden-md hidden-sm">
-      <div class="thumbnail"> <img src="/img/product4.jpg" alt="Thumbnail Image 1" class="img-responsive">
+      <div class="thumbnail"> <img src="../img/product4.jpg" alt="Thumbnail Image 1" class="img-responsive">
         <div class="caption">
           <h3>Little Yellow Bird</h3>
           <p>Slightly faulty, smells of fish.</p>
@@ -148,8 +138,6 @@
     </ul>
   </nav>
 </div>
-<hr>
-<hr>
 <hr>
   <div class="container well">
     <div class="row">
@@ -193,7 +181,7 @@
     </div>
   </div>
 </footer>
-<script src="/js/jquery-1.11.2.min.js"></script> 
-<script src="/js/bootstrap.min.js"></script>
+<script src="../js/jquery-1.11.2.min.js"></script> 
+<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
