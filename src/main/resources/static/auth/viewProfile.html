@@ -7,18 +7,38 @@
     	<div id="loggedIn" style="display : none;">
     		<table>
     			<tr>
+    				<td><label id="mode"></label></td>
+    			</tr>
+    			<tr>
     				<td><label>Real Name :</label></td>
-        			<td><label id="fullName"></label></td>
+	       			<td><input id="realName" type="text" onkeyup="checkName()"/></td>
+	      			<td><label id="hasName" style="color:#FF0000"></label></td>        			
    				</tr>
    				<tr>
     				<td><label>User Name :</label></td>
-        			<td><label id="userName"></label></td>
+	       			<td><input type="text" id="userName" onkeyup="checkUserName()"/></td>
+	       			<td><label id="UniqueUserName" style="color:#FF0000"></label></td>
    				</tr>
   				<tr>
     				<td><label>Biography :</label></td>
-        			<td><label id="bio"></label></td>
+        			<td><input type="text" id="bio"/></td>
    				</tr>
     		</table>
+    		<div id="enableEdit" style="display : none;">
+    			<table>
+	   				<tr>
+	   					<td><button onclick="editData(true)">Edit Profile</button></td>
+	   				</tr>    			
+    			</table>
+    		</div>
+    		<div id="editing" style="display : none;">
+    			<table>
+    				<tr>
+    					<td><button id="saveEdit" onclick="save()">Update Profile</button></td>
+						<td><button id="cancelEdit" onclick="window.location.href = '/viewProfile'">Cancel</button></td>
+    				</tr>
+    			</table>
+    		</div>
     	</div>
     	<div id="not_loggedIn" style="display : none;">
     		<label>In order to view this page you need to login</label>
@@ -27,7 +47,7 @@
     </body>
     <footer>
     	<!-- import jQuery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script src="../js/jquery-1.11.2.min.js"></script> 
     
     	<script>
 			$(document).ready(function(){
@@ -37,6 +57,7 @@
 					url: "/auth/user/current",
 					success: function(usr_detail){
 						console.log("User Logged in Found");
+						console.log(usr_detail.realName);
 						constructProfile(usr_detail);
 					},
 					error: function(){
@@ -48,11 +69,149 @@
         </script>
         <script>
         	function constructProfile(usr_detail){
-				document.getElementById("loggedIn").style.display = 'block';
-        		$("#fullName").innerHTML = usr_detail.realName;
-        		$("#userName").innerHTML = usr_detail.users.userName;
-        		$("#bio").innerHTML = usr_detail.biography;
+        		console.log(usr_detail);
+
+        		document.getElementById("loggedIn").style.display = 'block';
+        		document.getElementById("realName").value = usr_detail.realName;
+        		document.getElementById("userName").value = usr_detail.user.userName;
+        		document.getElementById("bio").value = usr_detail.biography;
+        		
+        		document.getElementById("enableEdit").style.display = 'block';
+        		editData(false);
         	}
+        	
+        	function editData(state){        		
+       			$("#fullName").attr("readonly", !state);
+       			$("#userName").attr("readonly", !state);
+       			$("#bio").attr("readonly", !state);
+       			
+       			if(!state){
+       				document.getElementById("mode").innerHTML = "Read Only";
+       			}
+       			else{
+       				document.getElementById("mode").innerHTML = "Editing Profile";
+            		document.getElementById("enableEdit").style.display = 'none';
+            		document.getElementById("editing").style.display = 'block';
+    			}
+        	}
+        </script>
+        <script>
+			function save(){
+				$.ajax({
+					type: "GET",
+					datatype: "json",
+					url: "/auth/user/current",
+					success: function(usr_detail){
+						var user = usr_detail.user;
+						
+						usr_detail.realName = $("#fullName").val();
+						usr_detail.biography = $("#bio").val();
+						
+						user.userName = $("#userName").val();
+						
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							data: JSON.stringify(usr_detail),
+							url: "/auth/details/edit",
+							success: function(res){
+								console.log("Details Updated");
+							},
+							error: function(){
+								console.log("Details not updated");
+							}
+						});
+						
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							data: JSON.stringify(user),
+							url: "/auth/user/edit",
+							success: function(res){
+								console.log("User Updated");
+							},
+							error: function(){
+								console.log("User not updated");
+							}							
+						});
+						
+						console.log(usr_detail.realName);
+						constructProfile(usr_detail);
+					},
+					error: function(){
+						console.log("No ones logged in");
+						document.getElementById("not_loggedIn").style.display = 'block';
+					}	
+				});        		
+        	}
+        </script>
+        <script>
+		function checkUserName(){
+			var userName = document.getElementById("userName").value;
+			if(userName == ""){
+				document.getElementById("UniqueUserName").innerHTML = "A Username must be provided";
+			}
+			else{
+				$.ajax({
+					type: "GET",
+					datatype: "json",
+					url: "/auth/user/current",
+					success: function(usr_detail){
+						currentUser = usr_detail.user.userName;
+		        		$.ajax({
+							type: "POST",
+							contentType: "text/plain",
+							data:userName,
+							url: "/auth/user/username",
+							success: function(result){
+								console.log(result);
+								if(result==""){
+									document.getElementById("UniqueUserName").innerHTML = "";
+								}
+								else if(currentUser == result.userName){
+									document.getElementById("UniqueUserName").innerHTML = "";
+								}
+								else{
+			        				document.getElementById("UniqueUserName").innerHTML = "Username taken";
+			        			}
+							},
+							error: function(){
+							}
+						});					
+
+					},
+					error: function(){
+					}	
+				});
+				
+				
+			}
+			disableSubmit();
+		}
+		
+		function checkName(){
+			var name = document.getElementById("realName").value;
+			if(name == ""){
+				document.getElementById("hasName").innerHTML = "A real name must be provided";
+			}
+			else{
+				document.getElementById("hasName").innerHTML = "";
+			}
+			disableSubmit();
+		}
+		
+		function disableSubmit(){
+			var valUser = document.getElementById("UniqueUserName").innerHTML;
+			var hasName = document.getElementById("hasName").innerHTML;
+			
+			if(valUser == "" && hasName == ""){
+				document.getElementById("saveEdit").disabled = false;					
+			}
+			else{
+				document.getElementById("saveEdit").disabled = true;					
+			}
+
+		}
         </script>
     </footer>    
 </html>
