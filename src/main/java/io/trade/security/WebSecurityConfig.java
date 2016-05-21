@@ -24,12 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	  //.antMatchers("/auth/**").access("hasRole('ROLE_USER')")
 	  .anyRequest().permitAll()
 	  .and()
-	    .formLogin().loginPage("/login")
+	    .formLogin().loginPage("/auth/login.html")
 	    .usernameParameter("username").passwordParameter("password")
 	  .and()
 		.exceptionHandling().accessDeniedPage("/403")
 	  .and()
-	    .logout().logoutSuccessUrl("/login?logout") 
+	    .logout().logoutSuccessUrl("/auth/login?logout") 
 	  .and()
 	    .csrf().disable();
 	 }

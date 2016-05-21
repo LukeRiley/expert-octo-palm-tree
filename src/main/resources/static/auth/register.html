@@ -39,7 +39,7 @@
     </body>
     <footer>
    		<!-- import jQuery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script> 
     
     	<script>
 	        var originalUser = null;
@@ -60,9 +60,9 @@
 							data: JSON.stringify(output),
 							success: function(user){
 								console.log("USER MADE");
-								
+								console.log(user);
 								//Make User Details
-								var details = {"realName":"", "biography":"", "users":user}
+								var details = {"realName":"", "biography":"", "user":user}
 								details.realName = $("#realName").val();
 								$.ajax({
 									type: "POST",
