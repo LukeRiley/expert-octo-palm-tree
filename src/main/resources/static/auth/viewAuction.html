@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <title>View Profile</title>
+    </head>
+    <body>
+	</body>
+	<footer>
+       	<script src="../js/jquery-1.11.2.min.js"></script>     
+		<script>
+			$(document).ready(function(){
+	        	var url = window.location.href;
+	        	var regex = /id=\d+/;
+        		var start = regex.exec(url).index;
+        		var id = url.substring(start+3, url.length);
+        		
+        		$.ajax({
+        			type:"POST"
+					contentType: "text/plain",
+					data: id,
+					url: "/auth/auction/id",
+					success: function(auction){
+						
+					},
+					error: function(){
+						
+					}
+        		});
+			});
+		</script>		
+	</footer>
+</html>

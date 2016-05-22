@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+        <script type="text/javascript">
+	    	var url = window.location.href;
+	       	var regex = /\?id=\d+/;
+				var hasId = regex.test(url);
+	       	if(hasId){
+	       		var start = regex.exec(url).index;
+	       		var IdPart = url.substring(start, url.length);
+	       		window.location.href = "auth/viewAuction.html"+IdPart;
+	       	}
+	       	else{
+               window.location.href = "/auth/viewAuction.html"        			       		
+	       	}
+        </script>
+        <title>Page Redirection</title>
+    </head>
+    <body>
+        <!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->
+        If you are not redirected automatically, follow the <a id = "link" href='/auth/viewAuction.html'>link</a>
+    </body>
+    <footer>
+       	<script src="../js/jquery-1.11.2.min.js"></script>     
+    	<script>
+			$(document).ready(function(){
+	        	var url = window.location.href;
+	        	var regex = /\?id=\d+/;
+				var hasId = regex.test(url);
+	        	if(hasId){
+	        		var start = regex.exec(url).index;
+	        		var IdPart = url.substring(start, url.length);
+	        		document.getElementById("link").href = "auth/viewAuction.html"+IdPart;
+	        		//window.location.href = "auth/viewAuction.html"+IdPart;
+	        	}
+			});
+    	</script>
+    </footer>
+</html>
