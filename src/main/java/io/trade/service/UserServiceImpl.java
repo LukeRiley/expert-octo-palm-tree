@@ -91,7 +91,8 @@ public class UserServiceImpl implements UserService {
 	public void add(Users user) {
 		try {
 			users.save(user);
-			roles.save(new UserRoles(user, "ROLE_USER"));
+			if (roles.findByUsers(user) == null)
+				roles.save(new UserRoles(user, "ROLE_USER"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -184,4 +184,9 @@ public class DatabaseServiceImpl implements DatabaseService {
 		this.users = users;
 	}
 
+	@Override
+	public Auction findAuctionById(Integer id) {
+		return auctions.findById(id);
+	}
+
 }

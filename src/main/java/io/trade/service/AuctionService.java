@@ -21,4 +21,6 @@ public interface AuctionService {
 
 	List<Auction> findByCategory(Category category);
 
+	Auction findById(Integer id);
+
 }
