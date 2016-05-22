@@ -56,13 +56,14 @@
 			$("#output").text(auctions);
 
 			for(var i=0; i!=auctions.length; i++) {
-				var auction = auctions[thing];
+				var auction = auctions[i];
+				console.log(auction);
 			}
 		}
 	</script>
 	<!-- -->
 
-	<!-- displayAuction(auction) ->
+	<!-- displayAuction(auction) -->
 	<script>
 		// Adding a single auction to the page
 		function displayAuction(auction) {
@@ -84,15 +85,15 @@
 			var endDay = end.getDate();
 			var startMonth = start.getMonth();
 			var endMonth = end.getMonth();
-			
-			if(whatthefuckishappening < 10)whatthefuckishappening = "0"+whatthefuckishappening;
+			<!--
+			if(startDay < 10)startDay = "0"+startDay;
 			if(endDay < 10)endDay = "0"+endDay;
 			if(startMonth < 10)startMonth = "0"+startMonth;
 			if(endMonth < 10)endMonth = "0"+endMonth;
 			
-			var startFormat = document.createTextNode(whatthefuckishappening + '/' + startMonth + '/' + start.getFullYear());
+			var startFormat = document.createTextNode(startDay + '/' + startMonth + '/' + start.getFullYear());
 			var endFormat = document.createTextNode(endDay + '/' + endMonth + '/' + end.getFullYear());
-			
+			-->
 			//Add Title data to table
 			var row = tbl.insertRow(-1);					
 			var col_1 = row.insertCell(-1);
@@ -113,7 +114,7 @@
 			col_2 = row.insertCell(-1);
 			col_1.appendChild(document.createTextNode("Category: "));
 			col_2.appendChild(cat);
-			
+			<!-- 
 			//Add Start Date
 			row = tbl.insertRow(-1);					
 			col_1 = row.insertCell(-1);
@@ -127,7 +128,7 @@
 			col_2 = row.insertCell(-1);
 			col_1.appendChild(document.createTextNode("End: "));
 			col_2.appendChild(endFormat);
-
+			-->
 			//Add Button to view specific Auction 
 			var viewAuctBtn = document.createElement('button');
 			//Button is assigned id of relevant auction
@@ -141,7 +142,7 @@
 			col_1.appendChild(viewAuctBtn);				
 		}
 	</script>
-	<!- -->
+	<!-- -->
 
 	<!-- viewAuction(btnClicked) -->
 	<script>
