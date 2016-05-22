@@ -15,12 +15,12 @@
         		var id = url.substring(start+3, url.length);
         		
         		$.ajax({
-        			type:"POST"
+        			type:"POST",
 					contentType: "text/plain",
 					data: id,
 					url: "/auth/auction/id",
 					success: function(auction){
-						
+						console.log(auction);	
 					},
 					error: function(){
 						
