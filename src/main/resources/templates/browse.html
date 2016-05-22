@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!DOCTYPE HTML>
+<html>
 
-<head>
+<head lang="en-US">
 	<title>Browse</title>
 </head>
 
@@ -14,13 +14,16 @@
 	
 	<p id="output" ></p>
 	
-	
+	<div>
+		<table id="allAuctions"></table>
+	</div>
 </body>
 
 <footer>
-	<!--  Import JQuery. Also ajax I think? -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	
+	<!-- Import JQuery -->
+	<script src="../js/jquery-1.11.2.min.js"></script>
+	 
+	<!-- $(document).ready -->
 	<script>
 		// Runs when the page has loaded
 		$(document).ready(function() {
@@ -30,28 +33,124 @@
 				url: "/auth/auction/all",
 				success: function(all_auctions) {
 					console.log("win! wooo!");
-					
+					console.log(all_auctions);
 					displayAllAuctions(all_auctions);
 				},
-				error: function(e) {
+				error: function() {
 					console.log("Error yo");
 					$("#checker").text("error. balls.");
-					$("#output").text(e);
+					$("#output").text("Summat broke");
 				}
-			})
-		})
+			});
+		});
 	</script>
+	<!-- -->
+
+	<!-- displayAllAuctions(auctions) -->
 	<script>
-		// 
-		function displayAllAuctions(auctions) {
-			console.log("SUCC!")
-			console.log(auctions)
-			
+		// Displays all auctions on the page
+		function displayAllAuctions(auctions){
+			console.log("SUCC!");
+			console.log(auctions);
 			$("#checker").text("Success! Apparently...");
 			$("#output").text(auctions);
+
+			for(var i=0; i!=auctions.length; i++) {
+				var auction = auctions[thing];
+			}
 		}
-	
 	</script>
+	<!-- -->
+
+	<!-- displayAuction(auction) ->
+	<script>
+		// Adding a single auction to the page
+		function displayAuction(auction) {
+			console.log("One Auction: ");
+			console.log(auction);
+			var item = auction.item;
+			
+			var tbl = document.getElementById("allAuctions");
+			
+			//The Data to put into the table
+			var name = document.createTextNode(item.name);
+			var desc = document.createTextNode(item.description);
+			var cat  = document.createTextNode(item.category.name);
+			
+			var start = new Date(auction.startDate.epochSecond * 1000);
+			var end = new Date(auction.endDate.epochSecond * 1000);  			
+			
+			var whatthefuckishappening = start.getDate();
+			var endDay = end.getDate();
+			var startMonth = start.getMonth();
+			var endMonth = end.getMonth();
+			
+			if(whatthefuckishappening < 10)whatthefuckishappening = "0"+whatthefuckishappening;
+			if(endDay < 10)endDay = "0"+endDay;
+			if(startMonth < 10)startMonth = "0"+startMonth;
+			if(endMonth < 10)endMonth = "0"+endMonth;
+			
+			var startFormat = document.createTextNode(whatthefuckishappening + '/' + startMonth + '/' + start.getFullYear());
+			var endFormat = document.createTextNode(endDay + '/' + endMonth + '/' + end.getFullYear());
+			
+			//Add Title data to table
+			var row = tbl.insertRow(-1);					
+			var col_1 = row.insertCell(-1);
+			var col_2 = row.insertCell(-1);
+			col_1.appendChild(document.createTextNode("Title: "));
+			col_2.appendChild(name);
+			
+			//Add Desc data
+			row = tbl.insertRow(-1);					
+			col_1 = row.insertCell(-1);
+			col_2 = row.insertCell(-1);
+			col_1.appendChild(document.createTextNode("Descritpion: "));
+			col_2.appendChild(desc);
+			
+			//Add Cat data
+			row = tbl.insertRow(-1);					
+			col_1 = row.insertCell(-1);
+			col_2 = row.insertCell(-1);
+			col_1.appendChild(document.createTextNode("Category: "));
+			col_2.appendChild(cat);
+			
+			//Add Start Date
+			row = tbl.insertRow(-1);					
+			col_1 = row.insertCell(-1);
+			col_2 = row.insertCell(-1);
+			col_1.appendChild(document.createTextNode("Start: "));
+			col_2.appendChild(startFormat);
+
+			//Add End Date
+			row = tbl.insertRow(-1);					
+			col_1 = row.insertCell(-1);
+			col_2 = row.insertCell(-1);
+			col_1.appendChild(document.createTextNode("End: "));
+			col_2.appendChild(endFormat);
+
+			//Add Button to view specific Auction 
+			var viewAuctBtn = document.createElement('button');
+			//Button is assigned id of relevant auction
+			viewAuctBtn.id = auction.id;
+			viewAuctBtn.innerHTML = "View Auction Page";
+			viewAuctBtn.onclick = function(){viewAuction(this);}
+			
+			row = tbl.insertRow(-1);					
+			col_1 = row.insertCell(-1);
+			col_1.colspan = 2;
+			col_1.appendChild(viewAuctBtn);				
+		}
+	</script>
+	<!- -->
+
+	<!-- viewAuction(btnClicked) -->
+	<script>
+    		function viewAuction(btnClicked){
+    			var auctionID = btnClicked.id;
+    			console.log("Selected Auction: "+auctionID);
+    		}
+  </script>
+  <!-- -->
 </footer>
 
 </html>
