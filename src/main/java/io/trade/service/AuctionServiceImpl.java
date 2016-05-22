@@ -77,4 +77,9 @@ public class AuctionServiceImpl implements AuctionService {
 		return a;
 	}
 
+	@Override
+	public Auction findById(Integer id) {
+		return auctions.findOne(id);
+	}
+
 }

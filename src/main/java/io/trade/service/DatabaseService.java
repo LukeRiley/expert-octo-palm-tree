@@ -86,4 +86,6 @@ public interface DatabaseService {
 	void setItems(ItemService items);
 
 	void setUsers(UserService users);
+
+	public Auction findAuctionById(Integer id);
 }

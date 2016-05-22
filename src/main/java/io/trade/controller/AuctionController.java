@@ -28,7 +28,16 @@ public class AuctionController {
 		return new ResponseEntity<List<Auction>>(database.findAllAuction(), HttpStatus.OK);
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping(value = "/auth/auction/user", method = RequestMethod.POST)
+=======
+	@RequestMapping(value = "/auth/auction/id", method = RequestMethod.GET)
+	public ResponseEntity<Auction> findById(@RequestBody Integer id){
+		return new ResponseEntity<Auction>(database.findAuctionById(id), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/auth/auction/user", method = RequestMethod.GET)
+>>>>>>> refs/remotes/origin/Luke
 	public ResponseEntity<List<Auction>> findByUser(@RequestBody Users user){
 		return new ResponseEntity<List<Auction>>(database.findAuctionByUser(user), HttpStatus.OK);
 	}
