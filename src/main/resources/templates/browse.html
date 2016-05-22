@@ -6,18 +6,52 @@
 </head>
 
 <body>
-	<h1>Come do Some Browse brah</h1>
-	<p>Waddup yo. We got some good shit for you to browse right here.</p>
+
+	<h1 style= "text-align: center">Come do Some Browse brah</h1>
+	<p style= "text-align: center">Waddup yo. We got some good shit for you to browse right here.</p>
+	
+	<p id="checker" ></p>
+	
+	<p id="output" ></p>
+	
+	
 </body>
 
 <footer>
 	<!--  Import JQuery. Also ajax I think? -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	
-	<!-- Custom JQuery/JavaScript Script -->
 	<script>
-		  
-	</script>	
+		// Runs when the page has loaded
+		$(document).ready(function() {
+			$.ajax({
+				type: "GET",
+				datatype: "json",
+				url: "/auth/auction/all",
+				success: function(all_auctions) {
+					console.log("win! wooo!");
+					
+					displayAllAuctions(all_auctions);
+				},
+				error: function(e) {
+					console.log("Error yo");
+					$("#checker").text("error. balls.");
+					$("#output").text(e);
+				}
+			})
+		})
+	</script>
+	<script>
+		// 
+		function displayAllAuctions(auctions) {
+			console.log("SUCC!")
+			console.log(auctions)
+			
+			$("#checker").text("Success! Apparently...");
+			$("#output").text(auctions);
+		}
+	
+	</script>
 </footer>
 
 </html>
