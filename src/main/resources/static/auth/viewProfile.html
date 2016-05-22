@@ -5,7 +5,8 @@
     </head>
     <body>
     	<div id="loggedIn" style="display : none;">
-    		<table>
+    		<div id="ProfileDetails">
+    			<table>
     			<tr>
     				<td><label id="mode"></label></td>
     			</tr>
@@ -24,26 +25,31 @@
         			<td><input type="text" id="bio"/></td>
    				</tr>
     		</table>
-    		<div id="enableEdit" style="display : none;">
-    			<table>
-	   				<tr>
-	   					<td><button onclick="editData(true)">Edit Profile</button></td>
-	   				</tr>    			
-    			</table>
+	    		<div id="enableEdit" style="display : none;">
+	    			<table>
+		   				<tr>
+		   					<td><button onclick="editData(true)">Edit Profile</button></td>
+		   				</tr>    			
+	    			</table>
+	    		</div>
+	    		<div id="editing" style="display : none;">
+	    			<table>
+	    				<tr>
+	    					<td><button id="saveEdit" onclick="save()">Update Profile</button></td>
+							<td><button id="cancelEdit" onclick="window.location.href = '/viewProfile'">Cancel</button></td>
+	    				</tr>
+	    			</table>
+    			</div>
     		</div>
-    		<div id="editing" style="display : none;">
-    			<table>
-    				<tr>
-    					<td><button id="saveEdit" onclick="save()">Update Profile</button></td>
-						<td><button id="cancelEdit" onclick="window.location.href = '/viewProfile'">Cancel</button></td>
-    				</tr>
+    		<br>
+    		<div id="ProfilesAuctions">
+    			<table id="myAuctions">    				
     			</table>
-    		</div>
+    		</div>	
     	</div>
     	<div id="not_loggedIn" style="display : none;">
     		<label>In order to view this page you need to login</label>
     	</div>
-    	<h1></h1>
     </body>
     <footer>
     	<!-- import jQuery -->
@@ -59,14 +65,19 @@
 						console.log("User Logged in Found");
 						console.log(usr_detail.realName);
 						constructProfile(usr_detail);
+						loadMyAuctions(usr_detail);
 					},
 					error: function(){
 						console.log("No ones logged in");
 						document.getElementById("not_loggedIn").style.display = 'block';
 					}	
 				});
+				
 			});
         </script>
+        
+        <!-- Profile Details Section -->
+        
         <script>
         	function constructProfile(usr_detail){
         		console.log(usr_detail);
@@ -182,9 +193,7 @@
 					},
 					error: function(){
 					}	
-				});
-				
-				
+				});	
 			}
 			disableSubmit();
 		}
@@ -213,5 +222,115 @@
 
 		}
         </script>
+        
+        <!-- Auction's Sections -->
+
+    	<script>
+    		function loadMyAuctions(usr_detail){
+    			$.ajax({
+    				type: "POST",
+    				contentType: "application/json",
+					data: JSON.stringify(usr_detail.user),
+    				url: "/auth/auction/user",
+    				success: function(auctions){
+    					console.log("Found Auctions for Current User");
+    					console.log(auctions);
+    					
+    					for(var i=0; i!=auctions.length;i++){
+    						addAuction(auctions[i]);
+    					}
+    					
+    				},
+    				error: function(){
+    					console.log("Failed to load auctions");
+    				}
+    			});
+    		}
+       	</script>
+    	<script>
+	    	function addAuction(auction){
+				console.log(auction);
+				var item = auction.item;	
+				
+				//The Table we will being appending to
+				var tbl = document.getElementById("myAuctions");
+				
+				
+				//The Data to put into the table
+				var name = document.createTextNode(item.name);
+				var desc = document.createTextNode(item.description);
+				var cat  = document.createTextNode(item.category.name);
+				
+				var start = new Date(auction.startDate.epochSecond * 1000);
+				var end = new Date(auction.endDate.epochSecond * 1000);  			
+				
+				var startDay = start.getDate();
+				var endDay = end.getDate();
+				var startMonth = start.getMonth();
+				var endMonth = end.getMonth();
+				
+				if(startDay<10)startDay = "0"+startDay;
+				if(endDay<10)endDay = "0"+endDay;
+				if(startMonth<10)startMonth = "0"+startMonth;
+				if(endMonth<10)endMonth = "0"+endMonth;
+				
+				var startFormat = document.createTextNode(startDay + '/' + startMonth + '/' + start.getFullYear());
+				var endFormat = document.createTextNode(endDay + '/' + endMonth + '/' + end.getFullYear());
+				
+				//Add Title data to table
+				var row = tbl.insertRow(-1);					
+				var col_1 = row.insertCell(-1);
+				var col_2 = row.insertCell(-1);
+				col_1.appendChild(document.createTextNode("Title: "));
+				col_2.appendChild(name);
+				
+				//Add Desc data
+				row = tbl.insertRow(-1);					
+				col_1 = row.insertCell(-1);
+				col_2 = row.insertCell(-1);
+				col_1.appendChild(document.createTextNode("Descritpion: "));
+				col_2.appendChild(desc);
+				
+				//Add Cat data
+				row = tbl.insertRow(-1);					
+				col_1 = row.insertCell(-1);
+				col_2 = row.insertCell(-1);
+				col_1.appendChild(document.createTextNode("Category: "));
+				col_2.appendChild(cat);
+				
+				//Add Start Date
+				row = tbl.insertRow(-1);					
+				col_1 = row.insertCell(-1);
+				col_2 = row.insertCell(-1);
+				col_1.appendChild(document.createTextNode("Start: "));
+				col_2.appendChild(startFormat);
+	
+				//Add End Date
+				row = tbl.insertRow(-1);					
+				col_1 = row.insertCell(-1);
+				col_2 = row.insertCell(-1);
+				col_1.appendChild(document.createTextNode("End: "));
+				col_2.appendChild(endFormat);
+	
+				//Add Button to view specific Auction 
+				var viewAuctBtn = document.createElement('button');
+				//Button is assigned id of relevant auction
+				viewAuctBtn.id = auction.id;
+				viewAuctBtn.innerHTML = "View Auction Page";
+				viewAuctBtn.onclick = function(){viewAuction(this);}
+				
+				row = tbl.insertRow(-1);					
+				col_1 = row.insertCell(-1);
+				col_1.colspan = 2;
+				col_1.appendChild(viewAuctBtn);				
+			}
+
+    	</script>
+    	<script>
+    		function viewAuction(btnClicked){
+    			var auctionID = btnClicked.id;
+    			console.log("Selected Auction: "+auctionID);
+    		}
+    	</script>
     </footer>    
 </html>
