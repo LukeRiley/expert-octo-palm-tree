@@ -14,8 +14,9 @@
 			<div><label id="startdate"></label></div>
 			<div><label id="enddate"></label></div>
 		</div>
-
-		<button id="bidButton">Bid</button>
+		
+		<input  id="bidAmount" onkeyup="checkBid()" type="text"/>
+		<button id="bidButton" onclick="addBid()">Bid</button>
 		
 		<p>Bid History</p>
 		<div>
@@ -105,33 +106,24 @@
 		<!-- displayBids(auction) -->
 		<script type="text/javascript">
 			function displayBids(auction) {
+		
+				var auction2 = auction;
+				auction2.startDate = null;
+				auction2.endDate = null;
 				
-				// PRINTY SHIT HERE
-				console.log("Trying to display bids");
-				console.log(auction);
-
-				var extra = JSON.stringify(auction.item);
-
-				/**/
 				$.ajax({
-
 					type: "POST",
 					url: "/auth/bid/item",
 					contentType: "application/json",
-					data: JSON.stringify(auction.item),
-				/*
-				$.ajax({
-					type: "GET",
-					url: "/auth/bid/all",
-				/**/
+					data: JSON.stringify(auction2),
 					success: function(bids) {
-						console.log("Success!")
-						console.log(bids);
+						console.log("Bid History Loaded!")
+						//console.log(bids);
 						populateBidTable(bids);
 					},
 					error: function(errorObj) {
+						console.log("Couldn't get Bid History");
 						console.log(errorObj);
-						console.log("Ajax req failed");
 					}
 				});
 			}
@@ -139,6 +131,8 @@
 		
 		<!-- populateBidTable(bids) -->
 		<script type="text/javascript">
+			var maxBid = 0;
+		
 			function populateBidTable(bids) {
 
 				//The Table we will being appending to
@@ -146,6 +140,12 @@
 				
 				for(var i = 0; i < bids.length; i++) {
 					var bid = bids[i];
+					
+					// Find Highest Bid
+					if (maxBid < bid.amount) {
+						maxBid = bid.amount;
+					}
+					
 					
 					// Get date info
 					var rawDate = new Date(bid.date.epochSecond * 1000);
@@ -168,9 +168,6 @@
 					var user = document.createTextNode(bid.user.userName)
 					var time = document.createTextNode(hours+':'+mins+':'+secs);
 					
-					// Hyperlink the username - wait no dw
-					
-					
 					//Create cells to fill
 					var row = tbl.insertRow(-1);
 					var amountCol = row.insertCell(-1);
@@ -183,8 +180,37 @@
 					userCol.appendChild(user);
 					dateCol.appendChild(date);
 					timeCol.appendChild(time);
-					
 				}
+			}
+		</script>
+		
+		<!-- addBid -->
+		<script>
+			var x = 0;
+			
+			function addBid() {
+				x++;
+				console.log("Shit's clict fam "+x+" : "+maxBid);
+				
+			}
+		</script>
+		
+		<!-- checkBid() -->
+		<script>
+			function checkBid() {
+				var button = document.getElementById("bidButton");
+				var bidBox = document.getElementById("bidAmount");
+				var amound = bidBox.value;
+				
+				
+				// Bid is higher than maxBid
+				if () {
+					button.disabled = true;
+				}
+				
+				// Bid is a number
+				
+				// Limit DP
 			}
 		</script>
 	</footer>
