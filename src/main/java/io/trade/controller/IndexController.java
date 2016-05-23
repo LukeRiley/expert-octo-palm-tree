@@ -63,7 +63,7 @@ public class IndexController {
 	private void addOthers(){
 		Category c = new Category("sport");
 		database.addCategory(c);
-		Item i = new Item("ball", "soccer ball, childs", c);
+		Item i = new Item("ball", "https://openclipart.org/image/2400px/svg_to_png/196123/1407858226.png", "soccer ball, childs", c);
 		database.addItem(i);
 		Instant instant = Instant.now();
 		Auction a1 = new Auction(instant.minus(Duration.ofDays(15)), instant.minus(Duration.ofDays(5)), i, user1);

@@ -12,15 +12,19 @@ public class Item {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column(name = "image", nullable = false)
+	private String image;
+	
 	@Column(name = "description", nullable = false)
 	private String description;
 	
 	@OneToOne
 	private Category category;
 	
-	public Item(String name, String description, Category category) {
+	public Item(String name, String image, String description, Category category) {
 		super();
 		this.name = name;
+		this.image = image;
 		this.description = description;
 		this.category = category;
 		
@@ -45,6 +49,14 @@ public class Item {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getDescription() {

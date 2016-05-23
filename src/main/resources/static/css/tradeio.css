@@ -1,4 +1,44 @@
 @charset "utf-8";
+
+body {
+	background-image: url(../img/background.jpg);
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.white {
+	color: white;
+}
+
+.grey {
+	color: #333333;
+}
+
+.red {
+	color: #B70003;
+}
+
+a {
+	color: #B70003;
+}
+
+.btn {
+	background-color: #B70003;
+}
+
+.highlight {
+	background-image:url(../img/header11.jpg);
+	background-color: #B70003;
+	color: white;
+	padding: 10px;
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+	border: thin;
+	border-radius: 15px;
+}
+
 .jumbotron h1 {
 	color: white;
 	margin-left: 40px;
@@ -10,12 +50,63 @@
 }
 .form-central {
 	margin: auto;
-	width: 300px;
+	width: 400px;
 	border: thin;
 	border-radius: 15px;
 	padding: 15px;
 	background-color: #EEEEEE;
+	margin-top: 20px;
+	background-image: url(../img/formbackground.jpg);
 }
+.browse-auctions {
+	margin: auto;
+	width: 75%;
+	border: thin;
+	border-radius: 15px;
+	padding: 15px;
+	background-color: #EEEEEE;
+	margin-top: 20px;
+	background-image: url(../img/formbackground.jpg);
+}
+table {
+	width: 100%;
+}
+td {
+	margin-bottom: 5px;
+}
+.browse-auctions tr:hover {
+	background-image: url(../img/header11.jpg);
+	color: white;
+}
+
 .centered-content {
 	text-align: right;
+}
+
+.jumbotron {
+	background-color:#C90003;
+}
+
+.create-auction {
+	background-image:url(../img/header8.jpg);
+}
+
+.home-page {
+	background-image:url(../img/header6.jpg);
+}
+
+.login-page {
+	background-image:url(../img/header7.jpg);
+}
+
+.register-page {
+	background-image:url(../img/header11.jpg);
+}
+
+.profile-page {
+	background-image:url(../img/header9.jpg);
+}
+
+.view-auction {
+	background-image:url(../img/header10.jpg);
 }
