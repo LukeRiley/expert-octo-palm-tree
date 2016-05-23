@@ -71,12 +71,18 @@ a {
 table {
 	width: 100%;
 }
-td {
-	margin-bottom: 5px;
+tr {
+	height: 50px;
+}
+tr:nth-child(even) {
+	background-color: #f2f2f2;
 }
 .browse-auctions tr:hover {
 	background-image: url(../img/header11.jpg);
 	color: white;
+}
+.browse-auctions tr:hover btn {
+	color: grey;
 }
 
 .centered-content {
