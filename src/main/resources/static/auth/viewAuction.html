@@ -15,7 +15,7 @@
 			<div><label id="enddate"></label></div>
 		</div>
 		
-		<input  id="bidAmount" onkeyup="checkBid()" type="text"/>
+		<input  id="bidAmount" onkeyup="checkBid()" onblur="roundBid()" type="text" value="0.00"/>
 		<button id="bidButton" onclick="addBid()">Bid</button>
 		
 		<p>Bid History</p>
@@ -41,6 +41,8 @@
 		
 		<!-- Runs on window load -->
 		<script type="text/javascript">
+			var maxBid = 0;	
+		
 			$(document).ready(function(){
 				var url = window.location.href;
 				var regex = /id=\d+/;
@@ -117,7 +119,7 @@
 					contentType: "application/json",
 					data: JSON.stringify(auction2),
 					success: function(bids) {
-						console.log("Bid History Loaded!")
+						//console.log("Bid History Loaded!")
 						//console.log(bids);
 						populateBidTable(bids);
 					},
@@ -131,8 +133,6 @@
 		
 		<!-- populateBidTable(bids) -->
 		<script type="text/javascript">
-			var maxBid = 0;
-		
 			function populateBidTable(bids) {
 
 				//The Table we will being appending to
@@ -140,6 +140,7 @@
 				
 				for(var i = 0; i < bids.length; i++) {
 					var bid = bids[i];
+					//console.log(bid);
 					
 					// Find Highest Bid
 					if (maxBid < bid.amount) {
@@ -181,36 +182,104 @@
 					dateCol.appendChild(date);
 					timeCol.appendChild(time);
 				}
+				checkBid();
 			}
 		</script>
 		
-		<!-- addBid -->
+		<!-- addBid ->
 		<script>
 			var x = 0;
-			
 			function addBid() {
 				x++;
 				console.log("Shit's clict fam "+x+" : "+maxBid);
 				
+				var amount = document.getElementById("bidAmount").value;
+				var time = new Date(Date.now());
+				var bid = {"amount": amount,
+						    "date": time,
+						    "user": null, 
+						    "auction": null};
+				
+				// 1st User first
+				$.ajax({
+					type: "GET",
+					url: "/auth/user/current",
+					success: function(user) {
+						console.log("Got User. Is this right?:")
+						console.log(user);
+						bid.user = user;
+						
+						// 2nd get Auction
+						//getAuction(bid);
+					},
+					error: function(err) {
+						console.log("error geting current user");
+						console.log(err);
+					}
+				});
+				
+			}
+			
+			function getUser() {
+				$.ajax({
+					type: "",
+					url: "",
+				});
+			}
+			
+			function getAuction() {
+				
+			}
+			
+			function logBid(amount, time, user, auction) {
+				
+				$.ajax({
+					type: "GET",
+					url: "/auth/bid/add",
+					data: "",
+					success: function() {
+						console.log("Got User. Is this right?:")
+						console.log(user);
+					},
+					error: function(err) {
+						console.log("Error adding bid")
+						console.log(err);
+					}
+				});
 			}
 		</script>
+		<!- /addBid -->
 		
 		<!-- checkBid() -->
 		<script>
 			function checkBid() {
 				var button = document.getElementById("bidButton");
 				var bidBox = document.getElementById("bidAmount");
-				var amound = bidBox.value;
-				
-				
-				// Bid is higher than maxBid
-				if () {
-					button.disabled = true;
+				var amount = bidBox.value;
+
+				// Bid is number
+				if (isNaN(amount)) {
+					document.getElementById("bidAmount").value = amount.slice(0, -1);
+					console.log("Non-number deleted");
 				}
+
+				// Bid is higher than maxBid
+				if (amount <= maxBid) {
+					button.disabled = true;
+				} else {
+					button.disabled = false;
+				}
+			}
+			
+			function roundBid() {
+				var amount = document.getElementById("bidAmount").value;
 				
-				// Bid is a number
-				
-				// Limit DP
+				// If Bid is null
+				if (amount == "") {
+					document.getElementById("bidAmount").value = "0.00";
+				}
+				// Round to 2 DP
+				document.getElementById("bidAmount").value = parseFloat(amount).toFixed(2);
 			}
 		</script>
 	</footer>
