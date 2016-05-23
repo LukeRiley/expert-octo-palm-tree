@@ -24,7 +24,10 @@
 	</body>
 
 	<footer>
+		<!-- JQuery Import -->
 		<script src="../js/jquery-1.11.2.min.js"></script>
+		
+		<!-- Runs on window load -->
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var url = window.location.href;
@@ -56,6 +59,8 @@
 				});
 			});
 		</script>
+		
+		<!-- displayAuction(auction) -->
 		<script type="text/javascript">
 			function displayAuction(auction) {
 				var item = auction.item;
@@ -85,6 +90,7 @@
 				var button = document.getElementById("bidButton");
 			}
 		</script>
+		
 		<!-- displayBids(auction) -->
 		<script type="text/javascript">
 			function displayBids(auction) {
@@ -92,20 +98,26 @@
 				console.log(auction);
 
 				var tbl = document.getElementById("bid");
-				var thing = auction.item;
-				var extra = JSON.stringify(auction.id);
+				var extra = JSON.stringify(auction.item);
+				
 
+				
+				/**/
 				$.ajax({
 
-					type: "GET",
-					dataType: "json",
-					contentType: "application/json",
-					data: JSON.stringify(auction),
+					type: "POST",
 					url: "/auth/bid/item",
-
+					contentType: "application/json",
+					data: extra,
+				/*
+				$.ajax({
+					type: "GET",
+					url: "/auth/bid/all",
+				/**/
 					success: function(bids) {
 						console.log("Success!")
 						console.log(bids);
+						populateBidTable(bids);
 					},
 					error: function(errorObj) {
 						console.log(errorObj);
@@ -113,6 +125,11 @@
 					}
 				});
 			}
+			
+			function populateBidTable(bids) {
+				
+			}
 		</script>
 	</footer>
+	
 </html>
