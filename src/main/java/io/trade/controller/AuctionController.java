@@ -33,7 +33,7 @@ public class AuctionController {
 		return new ResponseEntity<Auction>(database.findAuctionById(Integer.parseInt(id)), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/auth/auction/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/auction/user", method = RequestMethod.POST)
 	public ResponseEntity<List<Auction>> findByUser(@RequestBody Users user){
 		return new ResponseEntity<List<Auction>>(database.findAuctionByUser(user), HttpStatus.OK);
 	}
