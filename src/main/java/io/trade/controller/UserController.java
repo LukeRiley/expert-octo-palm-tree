@@ -78,4 +78,15 @@ public class UserController {
 		String username = ((UserDetails)principal).getUsername();
 		return new ResponseEntity<UsersDetails>(database.findUserDetailsByUser(database.findUsersByUserName(username)), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/auth/user/logged", method = RequestMethod.GET)
+	public ResponseEntity<String> isUserLoggedIn(){
+		if(SecurityContextHolder.getContext().getAuthentication() != null &&
+ SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
+			return new ResponseEntity<String>("true", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>("false", HttpStatus.OK);
+		}
+	}
 }
