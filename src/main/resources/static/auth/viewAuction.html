@@ -1,32 +1,118 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
-    <head>
-        <title>View Profile</title>
-    </head>
-    <body>
+
+	<head>
+		<title >View Auction</title>
+	</head>
+
+	<body>
+		<h2>View Auction</h2>
+		<div>
+			<div><label id="title"></label></div>
+			<div><label id="description"></label></div>
+			<div><label id="category"></label></div>
+			<div><label id="startdate"></label></div>
+			<div><label id="enddate"></label></div>
+		</div>
+
+		<button id="bidButton">Bid</button>
+
+		<div id="bidHistory">
+			Bid History Here
+		</div>
+
 	</body>
+
 	<footer>
-       	<script src="../js/jquery-1.11.2.min.js"></script>     
-		<script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript">
 			$(document).ready(function(){
-	        	var url = window.location.href;
-	        	var regex = /id=\d+/;
-        		var start = regex.exec(url).index;
-        		var id = url.substring(start+3, url.length);
-        		
-        		$.ajax({
-        			type:"POST",
+				var url = window.location.href;
+				var regex = /id=\d+/;
+				var start = regex.exec(url).index;
+				var id = url.substring(start+3, url.length);
+	
+				$.ajax({
+					type:"POST",
 					contentType: "text/plain",
 					data: id,
 					url: "/auth/auction/id",
 					success: function(auction){
-						console.log(auction);	
+						
+						if (!(auction == "")) {
+							//console.log("Try to display Auction");
+							displayAuction(auction);
+
+							displayBids(auction);
+
+						} else {
+							console.log("No auction received")
+						}
 					},
 					error: function(){
-						
+						console.log("There was an error loading the auction");
+						console.log();
 					}
-        		});
+				});
 			});
-		</script>		
+		</script>
+		<script type="text/javascript">
+			function displayAuction(auction) {
+				var item = auction.item;
+
+				var start = new Date(auction.startDate.epochSecond * 1000);
+				var end = new Date(auction.endDate.epochSecond * 1000);  			
+
+				var startDay = start.getDate();
+				var endDay = end.getDate();
+				var startMonth = start.getMonth() + 1;		//0 = Jan
+				var endMonth = end.getMonth() + 1;			//0 = Jan
+				
+				if(10 > startDay)startDay = "0"+startDay;
+				if(10 > endDay)endDay = "0"+endDay;
+				if(10 > startMonth)startMonth = "0"+startMonth;
+				if(10 > endMonth)endMonth = "0"+endMonth;
+				
+				var startDate = startDay + '/' + startMonth + '/' + start.getFullYear();
+				var endDate = endDay + '/' + endMonth + '/' + end.getFullYear();
+				
+				document.getElementById("title").innerHTML = item.name;
+				document.getElementById("description").innerHTML = item.description;
+				document.getElementById("category").innerHTML = item.category.name;
+				document.getElementById("startdate").innerHTML = startDate;
+				document.getElementById("enddate").innerHTML = endDate;
+
+				var button = document.getElementById("bidButton");
+			}
+		</script>
+		<!-- displayBids(auction) -->
+		<script type="text/javascript">
+			function displayBids(auction) {
+				console.log("Trying to display bids");
+				console.log(auction);
+
+				var tbl = document.getElementById("bid");
+				var thing = auction.item;
+				var extra = JSON.stringify(auction.id);
+
+				$.ajax({
+
+					type: "GET",
+					dataType: "json",
+					contentType: "application/json",
+					data: JSON.stringify(auction),
+					url: "/auth/bid/item",
+
+					success: function(bids) {
+						console.log("Success!")
+						console.log(bids);
+					},
+					error: function(errorObj) {
+						console.log(errorObj);
+						console.log("Ajax req failed");
+					}
+				});
+			}
+		</script>
 	</footer>
 </html>
