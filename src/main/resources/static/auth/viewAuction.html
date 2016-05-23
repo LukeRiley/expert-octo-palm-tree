@@ -16,9 +16,20 @@
 		</div>
 
 		<button id="bidButton">Bid</button>
-
-		<div id="bidHistory">
-			Bid History Here
+		
+		<p>Bid History</p>
+		<div>
+			<table id="bidHistory">
+				<thead>
+					<tr>
+						<th>Amount</th>
+						<th>Username</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody id="bidData"></tbody>
+			</table>
 		</div>
 
 	</body>
@@ -94,14 +105,13 @@
 		<!-- displayBids(auction) -->
 		<script type="text/javascript">
 			function displayBids(auction) {
+				
+				// PRINTY SHIT HERE
 				console.log("Trying to display bids");
 				console.log(auction);
 
-				var tbl = document.getElementById("bid");
 				var extra = JSON.stringify(auction.item);
-				
 
-				
 				/**/
 				$.ajax({
 
@@ -125,9 +135,56 @@
 					}
 				});
 			}
-			
+		</script>
+		
+		<!-- populateBidTable(bids) -->
+		<script type="text/javascript">
 			function populateBidTable(bids) {
+
+				//The Table we will being appending to
+				var tbl = document.getElementById("bidData");
 				
+				for(var i = 0; i < bids.length; i++) {
+					var bid = bids[i];
+					
+					// Get date info
+					var rawDate = new Date(bid.date.epochSecond * 1000);
+					var day = rawDate.getDate();
+					if(10 > day)day = "0"+day;
+					var month = rawDate.getMonth() + 1;		//0 = Jan
+					if(10 > month)month = "0"+month;
+					
+					// Get time info
+					var hours = rawDate.getHours();
+					if(10 > hours)hours = "0"+hours;
+					var mins = rawDate.getMinutes();
+					if(10 > mins)mins = "0"+mins;
+					var secs = rawDate.getSeconds();
+					if(10 > secs)secs = "0"+secs;
+					
+					//The Data to put into the table
+					var amount = document.createTextNode(bid.amount);
+					var date = document.createTextNode(day + '/' + month + '/' + rawDate.getFullYear());
+					var user = document.createTextNode(bid.user.userName)
+					var time = document.createTextNode(hours+':'+mins+':'+secs);
+					
+					// Hyperlink the username - wait no dw
+					
+					
+					//Create cells to fill
+					var row = tbl.insertRow(-1);
+					var amountCol = row.insertCell(-1);
+					var userCol = row.insertCell(-1);
+					var dateCol = row.insertCell(-1);
+					var timeCol = row.insertCell(-1);
+
+					//Fill Cells
+					amountCol.appendChild(amount);
+					userCol.appendChild(user);
+					dateCol.appendChild(date);
+					timeCol.appendChild(time);
+					
+				}
 			}
 		</script>
 	</footer>

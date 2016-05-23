@@ -70,7 +70,11 @@ public class IndexController {
 		database.addAuction(a1);
 		Auction a2 = new Auction(instant.minus(Duration.ofDays(5)), instant.plus(Duration.ofDays(5)), i, user1);
 		database.addAuction(a2);
-		Bid b = new Bid(54.50, instant, user1, a2);
+		Bid b = new Bid(20.00, instant.minus(Duration.ofDays(2)), user1, a2);
 		database.addBid(b);
+		Bid bi = new Bid(34.50, instant.minus(Duration.ofDays(1)), user2, a2);
+		database.addBid(bi);
+		Bid bid = new Bid(56.35, instant, user1, a2);
+		database.addBid(bid);
 	}
 }

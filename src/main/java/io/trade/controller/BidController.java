@@ -33,12 +33,12 @@ public class BidController {
 		return new ResponseEntity<List<Bid>>(database.findBidByUser(user), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/auth/bid/item", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/bid/item", method = RequestMethod.POST)
 	public ResponseEntity<List<Bid>> findByAuction(@RequestBody Auction auction){
 		return new ResponseEntity<List<Bid>>(database.findBidByAuction(auction), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/auth/bid/add", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/auth/bid/add", method = RequestMethod.GET)
 	public void add(@RequestBody Bid bid){
 		database.addBid(bid);
 	}
