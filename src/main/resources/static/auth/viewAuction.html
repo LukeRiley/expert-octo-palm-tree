@@ -108,7 +108,7 @@
 					type: "POST",
 					url: "/auth/bid/item",
 					contentType: "application/json",
-					data: extra,
+					data: JSON.stringify(auction.item),
 				/*
 				$.ajax({
 					type: "GET",
