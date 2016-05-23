@@ -74,7 +74,7 @@ table {
 td {
 	margin-bottom: 5px;
 }
-tr:hover .browse-auctions {
+.browse-auctions tr:hover {
 	background-image: url(../img/header11.jpg);
 	color: white;
 }
