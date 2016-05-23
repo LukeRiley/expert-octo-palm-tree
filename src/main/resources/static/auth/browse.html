@@ -42,16 +42,14 @@
   <h1>Browse Auctions</h1>
   <p>Search and view our catalogue</p>
 </div>
-<h2 class="text-center highlight">Auctions, Brah</h2>
-<h4 class="text-center">Waddup yo. We got some good shit for you right here</h4>
+<h2 class="text-center highlight">Auctions</h2>
+<h4 class="text-center">Browse and Search for Auctions Here</h4>
 	
-	<p id="checker" ></p>
-	<p id="output" ></p>
 	<div class="form-central">
 		<label>Search</label>
 		<input type="text" id="searchBar">
 		<button onclick="searchAuction()"> Search </button>
-		<p class="grey">
+		<p style="text-align: center" class="grey">
 			Search will return all results whose description or name contain the search term
 		</p>
 	</div>
@@ -130,8 +128,8 @@
 		function displayAllAuctions(auctions){
 			console.log("SUCC!");
 			console.log(auctions);
-			$("#checker").text("Success! Apparently...");
-			$("#output").text(auctions);
+			//$("#checker").text("Success! Apparently...");
+			//$("#output").text(auctions);
 			
 			var body = document.getElementById("tableBody");
 			var newBody = document.createElement('tbody');
