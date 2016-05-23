@@ -56,26 +56,28 @@
 </div>
 <div class="form-central">
     	<!-- Form Should submit a UserDetails object using JSON -->
-       	<table>
- 		    <tr>
-				<td><label>Item Name</label></td>
-				<td><input type="text" id="name"/></td>
-      		</tr>
-     	    <tr>
-				<td><label>Description</label></td>
-				<td><input type="text" id="desc"/></td>
-       		</tr>
-       		<tr>
-				<td><label>Category</label></td>
-				<td><input type="text" id="cat"/></td>
-       		</tr>
-     	
-       		<tr>
-       			<td>    			
-        			<button id="createAutcionBtn">Create Auction</button>
-       			</td>
-       		</tr>
-		</table>        
+    	<div id="myStuff">
+	       	<table id="formTable">
+	 		    <tr>
+					<td><label>Item Name</label></td>
+					<td><input type="text" id="name"/></td>
+	      		</tr>
+	     	    <tr>
+					<td><label>Description</label></td>
+					<td><input type="text" id="desc"/></td>
+	       		</tr>
+	       		<tr>
+					<td><label>Category</label></td>
+					<td><input type="text" id="cat"/></td>
+	       		</tr>
+	     	
+	       		<tr>
+	       			<td>    			
+	        			<button id="createAutcionBtn">Create Auction</button>
+	       			</td>
+	       		</tr>
+			</table>        
+    	</div>
         </div>
         <hr>
         <div class="container well">
@@ -127,10 +129,25 @@
    		<!-- import jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
-    	<script>
-	        var originalUser = null;
-        
+    	<script>    		
 			$(document).ready(function(){
+				$.ajax({
+					type: "GET",
+					datatype: "json",
+					url: "/auth/user/current",
+					success: function(usr_detail){
+					},
+					error: function(){
+						var formTable = document.getElementById("formTable");
+						
+						var newContent = document.createElement("label");
+						newContent.innerHTML = "Please Login first";
+						
+						formTable.parentNode.replaceChild(newContent, formTable);
+					}
+				});
+				
+				
 				$("#createAutcionBtn").click(function(){
 					var my_category = {"name":""};
 					my_category.name = $("#cat").val();
@@ -187,6 +204,7 @@
 													data: JSON.stringify(output),
 													success: function(msg, status, jqXHR){
 														console.log("DONE");
+														window.location.href = "/";
 													},
 													error: function(){
 														console.log("FAILURE");
