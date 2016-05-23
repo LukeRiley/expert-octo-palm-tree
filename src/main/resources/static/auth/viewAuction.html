@@ -9,6 +9,7 @@
 		<h2>View Auction</h2>
 		<div>
 			<div><label id="title"></label></div>
+			<div><label id="image"></label></div>
 			<div><label id="description"></label></div>
 			<div><label id="category"></label></div>
 			<div><label id="startdate"></label></div>
@@ -98,6 +99,16 @@
 				document.getElementById("category").innerHTML = item.category.name;
 				document.getElementById("startdate").innerHTML = startDate;
 				document.getElementById("enddate").innerHTML = endDate;
+				
+				var img = new Image();
+				var div = document.getElementById('image');
+
+				img.onload = function() {
+				  div.appendChild(img);
+				};
+
+				img.src = item.image;
+				img.style = "width:300px;height:300px;"
 
 				var button = document.getElementById("bidButton");
 			}
