@@ -48,7 +48,7 @@ public class AuctionController {
 		return new ResponseEntity<List<Auction>>(database.findAuctionByCategory(category), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/auth/auction/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/auth/auction/search", method = RequestMethod.POST)
 	public ResponseEntity<List<Auction>> findBySearch(@RequestBody String search){
 		return new ResponseEntity<List<Auction>>(database.findAuctionBySearch(search), HttpStatus.OK);
 	}

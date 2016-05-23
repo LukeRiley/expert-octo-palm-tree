@@ -13,9 +13,21 @@
 	<p id="checker" ></p>
 	
 	<p id="output" ></p>
-	
 	<div>
-		<table id="allAuctions"></table>
+		<label>Search</label>
+		<input type="text" id="searchBar">
+		<button onclick="searchAuction()"> Search </button>
+		<p>
+			Search will return all results whose description or name contain the search term
+		</p>
+	</div>
+	<div>
+		<label id="searchResults"></label>
+		<br>
+		<table id="allAuctions">
+			<thead id="tableHead"></thead>
+			<tbody id="tableBody"></tbody>
+		</table>
 	</div>
 </body>
 
@@ -27,21 +39,7 @@
 	<script>
 		// Runs when the page has loaded
 		$(document).ready(function() {
-			$.ajax({
-				type: "GET",
-				datatype: "json",
-				url: "/auth/auction/all",
-				success: function(all_auctions) {
-					console.log("win! wooo!");
-					console.log(all_auctions);
-					displayAllAuctions(all_auctions);
-				},
-				error: function() {
-					console.log("Error yo");
-					$("#checker").text("error. balls.");
-					$("#output").text("Summat broke");
-				}
-			});
+			reset();
 		});
 	</script>
 	<!-- -->
@@ -55,14 +53,26 @@
 			$("#checker").text("Success! Apparently...");
 			$("#output").text(auctions);
 			
+			var body = document.getElementById("tableBody");
+			var newBody = document.createElement('tbody');
+			newBody.id = "tableBody";
+			body.parentNode.replaceChild(newBody, body);
+			
+			var head = document.getElementById("tableHead");
+			var newHead = document.createElement('thead');
+			newHead.id = "tableHead";
+			head.parentNode.replaceChild(newHead, head);
+			
+			if(auctions.length==0){
+				newBody
+			}
+			
 			for(var i=0; i!=auctions.length; i++) {
 				var auction = auctions[i];
 				displayAuction(auction);
-				//displayAuction(auction);
 			}
 			
-			var tbl = document.getElementById("allAuctions");
-			var header = tbl.createTHead();
+			var header = document.getElementById("tableHead");
 			var row = header.insertRow(0);
 			
 			var nameCol = row.appendChild(document.createElement("th"));
@@ -83,6 +93,7 @@
 			var viewCol = row.appendChild(document.createElement("th"));
 			viewCol.appendChild(document.createTextNode(""));
 
+			$("#allAuctions").show();
 		}
 	</script>
 	
@@ -92,7 +103,7 @@
 			var item = auction.item;	
 			
 			//The Table we will being appending to
-			var tbl = document.getElementById("allAuctions");
+			var tbody = document.getElementById("tableBody");
 			
 			//The Data to put into the table
 			var name = document.createTextNode(item.name);
@@ -124,7 +135,7 @@
 			viewAuctBtn.onclick = function(){viewAuction(this);}
 			
 			//Create cells to fill
-			var row = tbl.insertRow(-1);
+			var row = tbody.insertRow(-1);
 			var nameCol = row.insertCell(-1);
 			var descCol = row.insertCell(-1);
 			var catCol = row.insertCell(-1);
@@ -151,7 +162,60 @@
     			window.location.href = "/viewAuction?id="+auctionID;
     		}
   </script>
-  <!-- -->
+  	
+  	<!-- search Auction-->
+  	<script>
+  		function searchAuction(){
+  			var search = $("#searchBar").val();
+  			if(search.length==0){
+  				reset();
+  			}
+  			else{
+  	  			$.ajax({
+  	  				type: "POST",
+  	  				contentType: "text/plain",
+  					data:search,
+  					url: "/auth/auction/search",
+  					success: function(results){
+  						console.log(results);
+  						if(results.length==0){
+  							document.getElementById("searchResults").innerHTML = "No Results found";
+  							$("#allAuctions").hide();
+  						}
+  						else{
+  							document.getElementById("searchResults").innerHTML = "Auction names that contain your search";
+  							displayAllAuctions(results);
+  						}
+  					},
+  					error: function(){
+  						
+  					}
+  	  			});  				
+  			}
+  		}
+  	</script>
+  	
+  	<!-- Resets the page to show all auctions -->
+  	<script>
+  		function reset(){
+  		  	$.ajax({
+  				type: "GET",
+  				datatype: "json",
+  				url: "/auth/auction/all",
+  				success: function(all_auctions) {
+  					console.log("win! wooo!");
+  					console.log(all_auctions);
+  					displayAllAuctions(all_auctions);
+  				document.getElementById("searchResults").innerHTML = "";
+  				},
+  				error: function() {
+  					console.log("Error yo");
+  					$("#checker").text("error. balls.");
+  					$("#output").text("Summat broke");
+  				}
+  			});  			
+  		}
+  	</script>
 </footer>
 
 </html>
