@@ -58,6 +58,10 @@
 					<td><label>Item Name</label></td>
 					<td><input type="text" id="name"/></td>
 	      		</tr>
+	      		<tr>
+					<td><label>Image Link</label></td>
+					<td><input type="text" id="image"/></td>
+	      		</tr>
 	     	    <tr>
 					<td><label>Description</label></td>
 					<td><input type="text" id="desc"/></td>
@@ -148,8 +152,9 @@
 					var my_category = {"name":""};
 					my_category.name = $("#cat").val();
 
-					var my_item = {"name":"", "description":"", "category":""};
+					var my_item = {"name":"", "image":"", "description":"", "category":""};
 					my_item.name = $("#name").val();
+					my_item.image = $("#image").val();
 					my_item.description = $("#desc").val();
 					
 					var output = {"startDate":"", "endDate":"","item":"", "user":""};
