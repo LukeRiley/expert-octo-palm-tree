@@ -54,12 +54,35 @@
 			console.log(auctions);
 			$("#checker").text("Success! Apparently...");
 			$("#output").text(auctions);
-
+			
 			for(var i=0; i!=auctions.length; i++) {
 				var auction = auctions[i];
 				displayAuction(auction);
 				//displayAuction(auction);
 			}
+			
+			var tbl = document.getElementById("allAuctions");
+			var header = tbl.createTHead();
+			var row = header.insertRow(0);
+			
+			var nameCol = row.appendChild(document.createElement("th"));
+			nameCol.appendChild(document.createTextNode("Name"));
+			
+			var descCol = row.appendChild(document.createElement("th"));
+			descCol.appendChild(document.createTextNode("Description"));
+			
+			var catCol = row.appendChild(document.createElement("th"));
+			catCol.appendChild(document.createTextNode("Category"));
+			
+			var startCol = row.appendChild(document.createElement("th"));
+			startCol.appendChild(document.createTextNode("Start Date"));
+			
+			var endCol = row.appendChild(document.createElement("th"));
+			endCol.appendChild(document.createTextNode("End Date"));
+			
+			var viewCol = row.appendChild(document.createElement("th"));
+			viewCol.appendChild(document.createTextNode(""));
+
 		}
 	</script>
 	
@@ -93,41 +116,6 @@
 			var startFormat = document.createTextNode(startDay + '/' + startMonth + '/' + start.getFullYear());
 			var endFormat = document.createTextNode(endDay + '/' + endMonth + '/' + end.getFullYear());
 			
-			//Add Title data to table
-			var row = tbl.insertRow(-1);					
-			var col_1 = row.insertCell(-1);
-			var col_2 = row.insertCell(-1);
-			col_1.appendChild(document.createTextNode("Title: "));
-			col_2.appendChild(name);
-
-			//Add Desc data
-			row = tbl.insertRow(-1);					
-			col_1 = row.insertCell(-1);
-			col_2 = row.insertCell(-1);
-			col_1.appendChild(document.createTextNode("Descritpion: "));
-			col_2.appendChild(desc);
-
-			//Add Cat data
-			row = tbl.insertRow(-1);					
-			col_1 = row.insertCell(-1);
-			col_2 = row.insertCell(-1);
-			col_1.appendChild(document.createTextNode("Category: "));
-			col_2.appendChild(cat);
-			
-			//Add Start Date
-			row = tbl.insertRow(-1);					
-			col_1 = row.insertCell(-1);
-			col_2 = row.insertCell(-1);
-			col_1.appendChild(document.createTextNode("Start: "));
-			col_2.appendChild(startFormat);
-
-			//Add End Date
-			row = tbl.insertRow(-1);					
-			col_1 = row.insertCell(-1);
-			col_2 = row.insertCell(-1);
-			col_1.appendChild(document.createTextNode("End: "));
-			col_2.appendChild(endFormat);
-
 			//Add Button to view specific Auction 
 			var viewAuctBtn = document.createElement('button');
 			//Button is assigned id of relevant auction
@@ -135,11 +123,22 @@
 			viewAuctBtn.innerHTML = "View Auction Page";
 			viewAuctBtn.onclick = function(){viewAuction(this);}
 			
-			row = tbl.insertRow(-1);					
-			col_1 = row.insertCell(-1);
-			col_1.colspan = 2;
-			col_1.appendChild(viewAuctBtn);				
-
+			//Create cells to fill
+			var row = tbl.insertRow(-1);
+			var nameCol = row.insertCell(-1);
+			var descCol = row.insertCell(-1);
+			var catCol = row.insertCell(-1);
+			var startCol = row.insertCell(-1);
+			var endCol = row.insertCell(-1);
+			var viewCol = row.insertCell(-1);
+			
+			//Fill Cells
+			nameCol.appendChild(name);
+			descCol.appendChild(desc);
+			catCol.appendChild(cat);
+			startCol.appendChild(startFormat);
+			endCol.appendChild(endFormat);
+			viewCol.appendChild(viewAuctBtn);
    		}
    	</script>
 	
