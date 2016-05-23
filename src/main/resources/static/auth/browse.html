@@ -188,7 +188,6 @@
 			
 			//The Data to put into the table
 			var name = document.createTextNode(item.name);
-			name.setAttribute("class", "auction-title");
 			var desc = document.createTextNode(item.description);
 			var cat  = document.createTextNode(item.category.name);
 			
@@ -218,7 +217,6 @@
 			
 			//Create cells to fill
 			var row = tbody.insertRow(-1);
-			row.setAttribute("class", "auction-row");
 			var nameCol = row.insertCell(-1);
 			var descCol = row.insertCell(-1);
 			var catCol = row.insertCell(-1);
